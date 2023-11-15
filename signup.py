@@ -49,7 +49,7 @@ def signup():
             return redirect(url_for('signup'))
         
         # 토큰 생성 및 이메일에 매핑
-        token = token_manager.generate_token(email)
+        token = token_manager.generate_token()
 
         # 이메일을 보내는 함수 호출
         send_verification_email(email, token)
