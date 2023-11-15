@@ -1,0 +1,27 @@
+<!-- templates/signup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가입하기</title>
+</head>
+<body>
+    <h2>가입하기</h2>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <form method="post" action="{{ url_for('signup') }}">
+        <label for="email">이메일:</label>
+        {% comment %} g.skku.edu 필터링 코드 추가 {% endcomment %}
+        <input type="email" name="email" required>
+        <button type="submit">가입 완료</button>
+    </form>
+</body>
+</html>
