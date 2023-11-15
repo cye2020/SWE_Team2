@@ -22,7 +22,6 @@ mail = Mail(app)
 
 # 이메일 전송 함수
 def send_verification_email(email, token):
-    print(f'Token: {token}')
     subject = '이메일 인증'
     body = f'인증 링크: {url_for("verify_email", token=token, _external=True)}'
     message = Message(subject, recipients=[email], body=body)
