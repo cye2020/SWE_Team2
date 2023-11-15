@@ -1,9 +1,8 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mail import Mail, Message
 import os
-import secrets
-import hashlib
-import time
+from user import User, TokenManager
+
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'default_secret_key')
@@ -20,22 +19,6 @@ app.config['MAIL_DEFAULT_SENDER'] = 'yourmail@gmail.com'
 mail = Mail(app)
 
 
-def generate_verification_token():
-    # 32바이트 길이의 무작위 토큰 생성
-    token = secrets.token_hex(16)
-
-    # 토큰에 현재 시간을 추가하여 유효 기간을 설정
-    expiration_time = int(time.time()) + 3600  # 1시간 동안 유효
-
-    # 토큰과 유효 기간을 결합하여 문자열 생성
-    token_string = f'{token}.{expiration_time}'
-
-    # 문자열을 해시화하여 보안 향상
-    hashed_token = hashlib.sha256(token_string.encode()).hexdigest()
-
-    return hashed_token
-
-
 # 이메일 전송 함수
 def send_verification_email(email, token):
     print(f'Token: {token}')
@@ -44,24 +27,28 @@ def send_verification_email(email, token):
     message = Message(subject, recipients=[email], body=body)
     mail.send(message)
 
-# 이메일 인증을 위한 데이터베이스 대신 사용할 간단한 딕셔너리
-user_data = {}
+# TokenManager 인스턴스 생성
+token_manager = TokenManager()
 
 
 # 회원 가입 시에 이메일 인증 메일 보내기
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
+        # 회원가입 정보를 받아온다. (이메일, 비밀번호, 닉네임)
         email = request.form['email']
-
-        print('Email: ', email)
+        password = request.form['password']
+        name = request.form['name']
+        
+        user = User(email, password, name)
+        
         # 이미 가입한 이메일인지 확인
-        if email in user_data:
+        if user.check_registered():
             flash('이미 가입된 이메일 주소입니다.', 'error')
             return redirect(url_for('signup'))
-
-        token = generate_verification_token()
-        user_data[email] = {'token': token, 'verified': False, 'timestamp': time.time()}
+        
+        # 토큰 생성 및 이메일에 매핑
+        token = token_manager.generate_token(email)
 
         # 이메일을 보내는 함수 호출
         send_verification_email(email, token)
@@ -76,12 +63,11 @@ def signup():
 @app.route('/verify/<token>')
 def verify_email(token):
     print('Verifying...')
-    print(user_data)
+    
     # 토큰을 확인하고 사용자를 활성화하거나 인증 상태를 갱신하는 로직
-    for email, data in user_data.items():
-        if data['token'] == token and not data['verified']:
-            # 토큰이 일치하고 아직 인증되지 않은 경우에만 인증
-            data['verified'] = True
+    for email in token_manager.tokens:
+        if token_manager.verify_token(email, token):
+            token_manager.mark_as_verified(email)
             flash('이메일이 성공적으로 인증되었습니다!', 'success')
             return redirect(url_for('index'))
 
