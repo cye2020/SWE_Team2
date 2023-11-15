@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_mail import Mail, Message
 import os
 from user import User, TokenManager
+from apscheduler.schedulers.background import BackgroundScheduler
 
 
 app = Flask(__name__)
@@ -79,6 +80,12 @@ def verify_email(token):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+# Flask 애플리케이션에 스케줄러 추가
+scheduler = BackgroundScheduler()
+scheduler.add_job(func=token_manager.remove_expired_tokens, trigger='interval', seconds=3600)  # 1시간마다 호출
+scheduler.start()
 
 
 if __name__ == '__main__':
