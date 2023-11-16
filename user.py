@@ -10,7 +10,7 @@ class User:
         self.name = name
     
     # DB와 연결해서 이미 존재하는 아이디인지 확인
-    def check_registered():
+    def check_registered(self):
         return False
     
     def register():
