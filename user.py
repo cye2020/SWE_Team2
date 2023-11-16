@@ -1,27 +1,43 @@
 import secrets
 import hashlib
 import time
+from flask_login import UserMixin
 
 
-class User:
-    def __init__(self, id: str, password: str, name: str):
-        self.id = id
+class User(UserMixin):
+    def __init__(self, email: str, password: str = None, nickname: str = None):
+        self.email = email
         self.password = password
-        self.name = name
+        self.nickname = nickname
+    
+    def get_id(self):
+        return self.email
+
+    def __repr__(self):
+        return f"USER: {self.email} = {self.nickname}"
     
     # DB와 연결해서 이미 존재하는 아이디인지 확인
     def check_registered(self):
         return False
     
-    def register():
+    # DB와 연결해서 유저를 등록
+    def register(self):
         pass
+    
+    # DB와 연결해서 login 가능한지 확인
+    def login(self):
+        # if self.email and self.password:
+        #     self.nickname = ''
+        #     return True
+        # else:
+        #     return False
+        return True
 
-    def login():
-        pass
-
+    # 로그 아웃
     def logout():
         pass
     
+    # 회원 탈퇴
     def unregister():
         pass
 
@@ -40,19 +56,12 @@ class Profile():
         pass
 
 
-def mail_check():
-    pass
-
-def user_check():
-    pass
-
-
 
 class TokenManager:
     def __init__(self):
         self.tokens = {}
 
-    def generate_token(self, user_email):
+    def generate_token(self, user_email, password, nickname):
         token = secrets.token_hex(16)
         creation_time = int(time.time())
         expiration_time = 3600  # 1시간 동안 유효
@@ -62,7 +71,11 @@ class TokenManager:
             'token': hashed_token,
             'creation_time': creation_time,
             'expiration_time': expiration_time,
-            'verified': False
+            'verified': False,
+            'user_info': {
+                'password': password,
+                'nickname': nickname
+            }
         }
 
         return hashed_token
@@ -90,5 +103,3 @@ class TokenManager:
         
         for email in expired_tokens:
             del self.tokens[email]
-
-
