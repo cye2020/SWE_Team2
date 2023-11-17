@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>회원 가입</title>
+    <title>로그인</title>
 </head>
 <body>
-    <h2>회원 가입</h2>
+    <h2>로그인</h2>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul>
@@ -18,19 +18,13 @@
         {% endif %}
     {% endwith %}
 
-    <form method="POST" action="{{ url_for('signup') }}">
+    <form method="POST" action="{{ url_for('login') }}">
         {{ form.hidden_tag() }}
         <label for="email">이메일:</label>
         {{ form.email() }}
         <br>
         <label for="password">비밀번호:</label>
         {{ form.password() }}
-        <br>
-        <label for="confirm_password">비밀번호 확인:</label>
-        {{ form.confirm_password() }}
-        <br>
-        <label for="nickname">닉네임:</label>
-        {{ form.nickname() }}
         <br>
         {{ form.submit() }}
     </form>
