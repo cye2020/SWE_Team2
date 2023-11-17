@@ -15,8 +15,8 @@ token_manager = TokenManager()
 
 
 @login_manager.user_loader
-def load_user(user_id):
-    return Member.query.get(str(user_id))
+def load_user(login_id):
+    return db.session.get(Member, login_id)
 
 
 # Home route
