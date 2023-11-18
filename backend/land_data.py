@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, request, jsonify
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from flask_sqlalchemy import SQLAlchemy
@@ -159,7 +159,7 @@ def update_database(item_list):
     finally:
         db.session.close()
 
-@app.route('/')
+@app.route('/update_data', methods=['POST'])
 def index():
     # 크롤링
     content = crawl_main()
@@ -170,11 +170,7 @@ def index():
     # 데이터베이스 업데이트
     update_database(item_list)
 
-    # 데이터베이스에서 모든 아이템을 가져와서 출력
-    items = House.query.all()
-
-    # HTML 템플릿 렌더링 및 아이템 데이터 전달
-    return render_template('land_data.html', items = items)
+    return jsonify({"message": "Data updated successfully"})
 
 if __name__ == '__main__':
     app.run(debug=True)
