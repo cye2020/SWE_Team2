@@ -1,0 +1,62 @@
+<!-- land_data.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Land Data</title>
+</head>
+<body>
+
+<h1>Land Data</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>House ID</th>
+            <th>House Type</th>
+            <th>Pay Type</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Feature</th>
+            <th>Direction</th>
+            <th>Floor</th>
+            <th>Price</th>
+            <th>Rent Price</th>
+            <th>Space 1</th>
+            <th>Space 2</th>
+            <th>Tag List</th>
+            <th>Image URL</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+            <tr>
+                <td>{{ item.house_id }}</td>
+                <td>{{ item.house_type }}</td>
+                <td>{{ item.pay_type }}</td>
+                <td>{{ item.lat }}</td>
+                <td>{{ item.lon }}</td>
+                <td>{{ item.feature }}</td>
+                <td>{{ item.direction }}</td>
+                <td>{{ item.floor }}</td>
+                <td>{{ item.prc }}</td>
+                <td>{{ item.rentprc }}</td>
+                <td>{{ item.space1 }}</td>
+                <td>{{ item.space2 }}</td>
+                <td>{{ item.taglist }}</td>
+                <td>
+                    {% if item.imgurl %}
+                        <img src="{{ item.imgurl }}" alt="House Image">
+                    {% else %}
+                        No Image
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>
