@@ -1,11 +1,10 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, login_required, logout_user, current_user
-from init import login_manager, scheduler, db, create_app
+from init import login_manager, scheduler, db, bcrypt, create_app
 from forms import RegisterForm, LoginForm
 from token_manager import TokenManager
 from mail import send_verification_email
 from models import Member
-
 
 app = create_app()
 
@@ -46,7 +45,8 @@ def register():
         password = form.password.data
         nickname = form.nickname.data
 
-        user = Member(login_id=email, password=password, nickname=nickname)
+        hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+        user = Member(login_id=email, password=hashed_password, nickname=nickname)
         token = token_manager.generate_token(user)
 
         send_verification_email(email, token)
@@ -69,6 +69,7 @@ def verify_email(token):
         db.session.add(user)
         db.session.commit()
         flash('이메일이 성공적으로 인증되었습니다!', 'success')
+        return redirect(url_for('login'))
     else:
         flash('유효하지 않은 인증 토큰입니다.', 'error')
 
@@ -83,12 +84,47 @@ def unauthorized():
     return redirect("/")
 
 
+# 프로필 변경 페이지
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def update_profile():
+    if request.method == 'POST':
+        new_nickname = request.form.get('nickname')
+        new_password = request.form.get('password')
+
+        if new_nickname:
+            current_user.nickname = new_nickname
+            db.session.commit()
+
+        if new_password:
+            current_user.password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+            db.session.commit()
+
+        flash('프로필이 성공적으로 변경되었습니다!', 'success')
+        return redirect(url_for('update_profile'))
+
+    return render_template('profile.html')
+
+
 # 로그아웃 라우트 추가
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     flash('로그아웃 되었습니다.', 'info')
+    return redirect(url_for('index'))
+
+
+# 회원 탈퇴 기능
+@app.route('/delete_account', methods=['POST'])
+@login_required
+def delete_account():
+    # 로그인된 사용자를 데이터베이스에서 삭제
+    db.session.delete(current_user)
+    db.session.commit()
+
+    logout_user()  # 로그아웃
+    flash('회원 탈퇴가 완료되었습니다.', 'success')
     return redirect(url_for('index'))
 
 

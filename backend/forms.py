@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo, InputRequired, Length, Regexp
 from models import Member
+from init import bcrypt
 
 
 class RegisterForm(FlaskForm):
@@ -39,9 +40,9 @@ class LoginForm(FlaskForm):
     
     def validate_email(self, email):
         member = Member.query.filter_by(login_id=email.data).first()
-        
+        print(f'Password: {member.password}')
         if member is None:
             raise ValidationError("등록되지 않은 이메일 주소입니다")
         
-        if member.password != self.password.data:
+        if not bcrypt.check_password_hash(member.password, self.password.data):
             raise ValidationError("비밀번호가 일치하지 않습니다.")
