@@ -89,10 +89,6 @@ def crawl_main():
     content.append(crawl_each_region("율전동"))
     content.append(crawl_each_region("천천동"))
 
-    # JSON 파일에 저장
-    with open('data.json', 'w') as json_file:
-        json.dump(content, json_file, indent=4)
-
     return content
 
 def process_crawled_data(content):
