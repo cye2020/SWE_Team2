@@ -8,6 +8,7 @@
     {% if current_user.is_authenticated %}
 
     <h1>Welcome {{ current_user.username }}</h1>
+    <a href="{{url_for('profile')}}">Profile</a>
     <a href="{{url_for('logout')}}">Logout</a>
 
     {% else %}
