@@ -1,11 +1,3 @@
-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    height: 100vh;
-  }
-  
 /* General styles */
 .flex-container {
     display: flex;
@@ -34,7 +26,6 @@ body {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    border-radius: 35px;
 }
 
 /* Sidebar styles */
