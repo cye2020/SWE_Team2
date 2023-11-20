@@ -159,8 +159,12 @@ def update_database(item_list):
     finally:
         db.session.close()
 
-@app.route('/update_data', methods=['POST'])
+@app.route('/')
 def index():
+    return jsonify({"message": "Update server is running"})
+
+@app.route('/house/update', methods=['POST'])
+def update():
     # 크롤링
     content = crawl_main()
 

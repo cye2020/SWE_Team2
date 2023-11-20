@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map { height: 400px; }
+    </style>
+</head>
+    
+<body>
+    <div id="map"></div>
+
+    <h1>House Filter</h1>
+
+    <form action="/house/filter" method="GET">
+        <!-- House Type #오피스텔,빌라,단독/다가구,상가주택,원룸,고시원 -->
+        <label for="house_type">House Type:</label>
+        <input type="checkbox" name="house_type" value="오피스텔"> 오피스텔
+        <input type="checkbox" name="house_type" value="빌라"> 빌라
+        <input type="checkbox" name="house_type" value="단독/다가구"> 단독/다가구
+        <input type="checkbox" name="house_type" value="상가주택"> 상가주택
+        <input type="checkbox" name="house_type" value="원룸"> 원룸
+        <input type="checkbox" name="house_type" value="고시원"> 고시원
+        <!-- Add other house types as needed -->
+
+        <br>
+
+        <!-- Pay Type -->
+        <label for="pay_type">Pay Type:</label>
+        <input type="checkbox" name="pay_type" value="월세"> 월세
+        <input type="checkbox" name="pay_type" value="전세"> 전세
+        <input type="checkbox" name="pay_type" value="단기임대"> 단기임대
+        <!-- Add other pay types as needed -->
+
+        <br>
+
+        <!-- Other Filters -->
+        <label for="prc_lt">Price (Max):</label>
+        <input type="number" name="prc_lt">
+
+        <label for="rentprc_lt">Rent Price (Max):</label>
+        <input type="number" name="rentprc_lt">
+
+        <label for="space2_lt">Space2 (Max):</label>
+        <input type="number" name="space2_max">
+
+        <label for="taglist">Tag List:</label>
+        <input type="text" name="taglist">
+
+        <label for="direction">Direction:</label>
+        <input type="text" name="direction">
+
+        <br>
+
+        <!-- Sort By -->
+        <label for="sort">Sort By:</label>
+        <select name="sort">
+            <option value="prc">Price</option>
+            <option value="rentprc">Rent Price</option>
+            <option value="space2">Space2</option>
+        </select>
+
+        <label for="order">Order:</label>
+        <select name="order">
+            <option value="ascend">Ascending</option>
+            <option value="descend">Descending</option>
+        </select>
+
+        <br>
+
+        <!-- Reset Button -->
+        <input type="submit" value="Apply Filters" onclick="applyFilters()">
+        <button type="button" onclick="resetFilters()">Reset Filters</button>
+    </form>
+
+    <div>
+        <h2>Filtered Houses</h2>
+        <table>
+            <tr>
+                <th>House ID</th>
+                <th>House Type</th>
+                <th>Pay Type</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>Feature</th>
+                <th>Direction</th>
+                <th>Floor</th>
+                <th>Price</th>
+                <th>Rent Price</th>
+                <th>Space1</th>
+                <th>Space2</th>
+                <th>Tag List</th>
+                <th>Image URL</th>
+            </tr>
+            {% for house in houses %}
+                <tr>
+                    <td>{{ house.house_id }}</td>
+                    <td>{{ house.house_type }}</td>
+                    <td>{{ house.pay_type }}</td>
+                    <td>{{ house.lat }}</td>
+                    <td>{{ house.lon }}</td>
+                    <td>{{ house.feature }}</td>
+                    <td>{{ house.direction }}</td>
+                    <td>{{ house.floor }}</td>
+                    <td>{{ house.prc }}</td>
+                    <td>{{ house.rentprc }}</td>
+                    <td>{{ house.space1 }}</td>
+                    <td>{{ house.space2 }}</td>
+                    <td>{{ house.taglist }}</td>
+                    <td>{{ house.imgurl }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([37.2937156, 126.974337], 15); // Set default view, adjust based on your data
+
+        // Add a base layer (you can customize this)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Function to add markers to the map
+        function addMarkers(houses) {
+            houses.forEach(function (house) {
+                var marker = L.marker([house.lat, house.lon]).addTo(map);
+                marker.bindPopup(`<b>${house.house_type}</b><br>${house.prc}<br>${house.rentprc}`);
+            });
+        }
+
+        // Function to get checkbox values
+        function getCheckboxValues(checkboxName) {
+            var checkboxes = document.querySelectorAll('input[name=' + checkboxName + ']:checked');
+            var values = [];
+
+            checkboxes.forEach(function (checkbox) {
+                values.push(checkbox.value);
+            });
+
+            return values;
+        }
+
+        // Function to apply filters
+        function applyFilters() {
+            // Collect filter values
+            var houseType = getCheckboxValues('house_type');
+            var payType = getCheckboxValues('pay_type');
+            var prcLt = document.querySelector('input[name=prc_lt]').value;
+            var rentprcLt = document.querySelector('input[name=rentprc_lt]').value;
+            var spc2Lt = document.querySelector('input[name=space2_lt]').value;
+            var taglist = document.querySelector('input[name=taglist]').value;
+            var direction = document.querySelector('input[name=direction]').value;
+            var sort = document.querySelector('select[name=sort]').value;
+            var order = document.querySelector('select[name=order]').value;
+
+            // Encode filter values
+            var filterObject = {
+                house_type: houseType,
+                pay_type: payType,
+                prc_lt: prcLt,
+                rentprc_lt: rentprcLt,
+                sort: sort,
+                order: order
+            };
+
+            var filterString = Object.keys(filterObject)
+                .filter(key => filterObject[key].length > 0)
+                .map(key => {
+                    if (Array.isArray(filterObject[key])) {
+                        // 배열이면 여러 값을 전달할 수 있도록 처리
+                        return filterObject[key].map(value => `${key}[]=${encodeURIComponent(value)}`).join('&');
+                    } else {
+                        // 배열이 아니어도 배열 형태로 처리
+                        return `${key}[]=${encodeURIComponent(filterObject[key])}`;
+                    }
+                })
+                .join('&');
+
+            // AJAX request
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/house/filter?' + filterString, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Update table with filtered houses
+                    var serverData = JSON.parse(xhr.responseText);
+
+                    // Call the addMarkers function with the received data
+                    addMarkers(serverData);
+                } else if (xhr.readyState === 4) {
+                    console.error('Error:', xhr.status);
+                }
+            };
+            xhr.send();
+        }
+
+        // Function to reset filters
+        function resetFilters() {
+            // Clear all filter inputs
+            var filterInputs = document.querySelectorAll('input[type="checkbox"], input[type="number"], input[type="text"]');
+            filterInputs.forEach(function (input) {
+                input.value = '';
+                if (input.type === 'checkbox') {
+                    input.checked = false;
+                }
+            });
+
+            // Trigger the applyFilters function to reload the original data
+            applyFilters();
+        }
+
+        fetch('/house')  // Use the /house endpoint to get initial data
+            .then(response => response.json())
+            .then(data => addMarkers(data))
+            .catch(error => console.error('Error fetching initial data:', error));
+    </script>
+
+</body>
