@@ -6,22 +6,25 @@ from init import bcrypt
 
 
 class RegisterForm(FlaskForm):
-    email = StringField('이메일', validators=[DataRequired(), Email()])
+    email = StringField('이메일', validators=[
+        DataRequired(),
+        Regexp(r'^[a-zA-Z0-9._%+-]+@g\.skku\.edu$', message='성균관대학교 이메일을 사용해주세요')
+    ])
     password = PasswordField('비밀번호', validators=[DataRequired()])
     confirm_password = PasswordField(
         validators=[
             InputRequired(),
-            EqualTo("password", message="Passwords must match !"),
+            EqualTo("password", message="비밀번호가 일치하지 않습니다."),
         ]
     )
     nickname = StringField(
         validators=[
             InputRequired(),
-            Length(3, 20, message="Please provide a valid name"),
+            Length(3, 20, message="닉네임은 3글자 이상, 20글자 이하로 입력해주세요."),
             Regexp(
                 "^[ㄱ-ㅎ가-힣A-Za-z][ㄱ-ㅎ가-힣A-Za-z0-9_.]*$",
                 0,
-                "Nickname must have only letters, " "numbers, dots or underscores",
+                "닉네임은 한글, 영어, 숫자, '.', '_'만 사용할 수 있습니다. ",
             ),
         ]
     )
@@ -29,7 +32,7 @@ class RegisterForm(FlaskForm):
     
     def validate_email(self, email):
         if Member.query.filter_by(login_id=email.data).first():
-            raise ValidationError("Email already registered!")
+            raise ValidationError("이미 등록된 이메일입니다!")
 
 
 
