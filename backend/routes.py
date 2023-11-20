@@ -21,7 +21,7 @@ def load_user(login_id):
 # Home route
 @app.route("/", methods=("GET", "POST"), strict_slashes=False)
 def index():
-    return render_template("index.html",title="Home")
+    return render_template("userauth.html",title="Home")
 
 
 # Login route
@@ -33,7 +33,7 @@ def login():
         user = Member.query.filter_by(login_id=email).first()
         login_user(user, remember=True)
         return redirect(url_for('index'))
-    return render_template("auth.html",form=form)
+    return render_template("login.html",form=form)
 
 
 # Register route
@@ -41,7 +41,7 @@ def login():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        email = form.email.data
+        email = form.email.data + "@g.skku.edu"
         password = form.password.data
         nickname = form.nickname.data
 
@@ -53,7 +53,7 @@ def register():
 
         flash('이메일로 인증 링크가 전송되었습니다. 이메일을 확인해주세요.', 'info')
         return redirect(url_for('register'))
-    return render_template("auth.html",form=form)
+    return render_template("signin.html",form=form)
 
 
 # 이메일 인증 페이지
@@ -65,15 +65,16 @@ def verify_email(token):
         
         # 사용자 정보를 가져와서 등록
         user = token_manager.tokens[token]['user']
-        print('Member DB: Success')
+        
         db.session.add(user)
         db.session.commit()
-        flash('이메일이 성공적으로 인증되었습니다!', 'success')
-        return redirect(url_for('login'))
+        message = '이메일이 성공적으로 인증되었습니다!'
+        alert_type = 'success'
+        return render_template('alert.html', message=message, alert_type=alert_type, redirect_url=url_for('login'))
     else:
-        flash('유효하지 않은 인증 토큰입니다.', 'error')
-
-    return redirect(url_for('register'))
+        message = '유효하지 않은 인증 토큰입니다.'
+        alert_type = 'error'
+        return render_template('alert.html', message=message, alert_type=alert_type, redirect_url=url_for('register'))
 
 
 # login_required로 요청된 기능에서 현재 사용자가 로그인되어 있지 않은 경우
@@ -81,7 +82,7 @@ def verify_email(token):
 @login_manager.unauthorized_handler
 def unauthorized():
     # 로그인되어 있지 않은 사용자일 경우 첫화면으로 이동
-    return redirect("/")
+    return redirect(url_for('index'))
 
 
 # 프로필 변경 페이지

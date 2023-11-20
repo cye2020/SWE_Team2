@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='css/signin.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Sign in page</title>
+</head>
+<body>
+    
+    <div class="member">
+        <span class="logo material-symbols-outlined">home</span>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+        <form method="POST" action="{{ url_for('register') }}">
+            {{ form.hidden_tag() }}
+            <div class="field">
+                <b>아이디</b>
+                <span class="placehold-text">{{ form.email }}</span>
+            </div>
+            <div class="invalid-feedback">
+            {% for error in form.email.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+            <div class="field">
+                <b>비밀번호</b>
+                {{ form.password(class="userpw") }}
+            </div>
+            {% for error in form.password.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+            <div class="field">
+                <b>비밀번호 확인</b>
+                {{ form.confirm_password(class="userpw") }}
+            </div>
+            {% for error in form.confirm_password.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+            <div class="field">
+                <b>닉네임</b>
+                {{ form.nickname }}
+            </div>
+            {% for error in form.nickname.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+            {{ form.submit }}
+        </form>
+        
+    </div>
+
+</body>
+</html>

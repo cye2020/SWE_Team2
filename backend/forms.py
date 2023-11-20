@@ -8,7 +8,7 @@ from init import bcrypt
 class RegisterForm(FlaskForm):
     email = StringField('이메일', validators=[
         DataRequired(),
-        Regexp(r'^[a-zA-Z0-9._%+-]+@g\.skku\.edu$', message='성균관대학교 이메일을 사용해주세요')
+        Regexp(r'^[a-zA-Z0-9._%+-]+$', message='유효한 이메일 주소를 입력하세요')
     ])
     password = PasswordField('비밀번호', validators=[DataRequired()])
     confirm_password = PasswordField(
@@ -31,14 +31,14 @@ class RegisterForm(FlaskForm):
     submit = SubmitField('가입하기')
     
     def validate_email(self, email):
-        if Member.query.filter_by(login_id=email.data).first():
+        if Member.query.filter_by(login_id=(email.data + "@g.skku.edu")).first():
             raise ValidationError("이미 등록된 이메일입니다!")
 
 
 
 class LoginForm(FlaskForm):
-    email = StringField('이메일', validators=[DataRequired(), Email()])
-    password = PasswordField('비밀번호', validators=[DataRequired()])
+    email = StringField('ID', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('로그인')
     
     def validate_email(self, email):
