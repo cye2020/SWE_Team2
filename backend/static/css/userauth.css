@@ -1,0 +1,112 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 1440px;
+    height: 1024px;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+}
+
+.inner-container {
+    width: 1286px;
+    height: 835px;
+    position: absolute;
+    left: 77px;
+    top: 101px;
+    overflow: hidden;
+    border-radius: 37px;
+    background: #2b6653;
+    box-shadow: 0px 4px 4px 0 rgba(0,0,0,0.25);
+}
+
+.icon1, .icon2, .icon3, .icon4 {
+    position: absolute;
+}
+
+.icon1 {
+    width: 50px;
+    height: 50px;
+    left: 56px;
+    top: 460px;
+}
+
+.icon2 {
+    width: 50px;
+    height: 50px;
+    left: 56.5px;
+    top: 334.5px;
+}
+
+.icon3 {
+    width: 46px;
+    height: 46px;
+    left: 58px;
+    top: 58px;
+}
+
+.icon4 {
+    width: 46px;
+    height: 46px;
+    left: 57px;
+    top: 199px;
+}
+
+.icon5 {
+    width: 46px;
+    height: 46px;
+    left: 58px;
+    top: 292px;
+}
+
+.background1, .background2, .background3, .background4 {
+    position: absolute;
+    overflow: hidden;
+    border-radius: 35px;
+}
+
+.background1 {
+    width: 1100px;
+    height: 788px;
+    left: 162px;
+    top: 33px;
+    background: linear-gradient(to bottom, #ffd233 0%, rgba(255,210,51,0) 100%);
+}
+
+.background2 {
+    width: 442px;
+    height: 238px;
+    left: 487px;
+    top: 293px;
+    background: #fff;
+}
+
+.button1, .button2 {
+    position: absolute;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: left;
+    border-radius: 11px;
+    border-width: 3px;
+    border-color: #8dc63f;
+    background-color: #fff;
+}
+.button_base {
+  width: 233px;
+  height: 37px;
+  text-align: center;
+  color: #2b6653;
+  font-size: 22px;
+  left: 105px;
+}
+.button1 {
+
+    top: 94px;
+}
+
+.button2 {
+    top: 152px;
+ }

@@ -114,7 +114,9 @@
 }
 
 .InfoSub {
-    width: 134px;
+    border: 2px solid blue;
+    white-space: nowrap;
+    width: 300px;
     height: 50px;
     left: 121px;
     top: 40px;
@@ -122,11 +124,12 @@
 }
 
 .InfoSub span {
+    
     border: 2px solid red;
     font-size: 15px;
     font-family: HCR Dotum;
     font-weight: 700;
-    word-wrap: break-word;
+    
     color: #7B7B7B;
 }
 
@@ -140,10 +143,6 @@
     height: 55px;
     margin-left: auto; /* 우측 여백을 최대화하여 우측 끝에 위치 */
     position: relative;
-}
-a{
-    text-decoration: none;
-    color: inherit;
 }
 
 
