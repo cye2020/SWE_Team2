@@ -1,0 +1,24 @@
+/* Example styles, customize as needed */
+.login-form {
+    max-width: 400px;
+    margin: auto;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+.alert {
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Add more styles as needed */
