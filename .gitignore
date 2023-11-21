@@ -1,0 +1,5 @@
+# Ignore pycache directory
+backend/__pycache__/
+
+# Ignore pyc files
+*.pyc
