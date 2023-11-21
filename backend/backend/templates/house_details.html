@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>House Details</title>
+</head>
+<body>
+    <h1>House Details</h1>
+    <ul>
+        <li><strong>House ID:</strong> {{ house.house_id }}</li>
+        <li><strong>House Type:</strong> {{ house.house_type }}</li>
+        <li><strong>Pay Type:</strong> {{ house.pay_type }}</li>
+        <li><strong>Latitude:</strong> {{ house.lat }}</li>
+        <li><strong>Longitude:</strong> {{ house.lon }}</li>
+        <li><strong>Feature:</strong> {{ house.feature }}</li>
+        <li><strong>Direction:</strong> {{ house.direction }}</li>
+        <li><strong>Floor:</strong> {{ house.floor }}</li>
+        <li><strong>Price:</strong> {{ house.prc }}</li>
+        <li><strong>Rent Price:</strong> {{ house.rentprc }}</li>
+        <li><strong>Space 1:</strong> {{ house.space1 }}</li>
+        <li><strong>Space 2:</strong> {{ house.space2 }}</li>
+        <li><strong>Tag List:</strong> {{ house.taglist }}</li>
+        <li><strong>Image URL:</strong> {{ house.imgurl }}</li>
+        <!-- Add other fields as needed -->
+    </ul>
+    <img src="{{ house.imgurl }}" alt="House Image">
+</body>
+</html>
