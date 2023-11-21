@@ -106,6 +106,7 @@
     left: 121px;
     top: 0px;
     position: absolute;
+    white-space: nowrap;
     color: black;
     font-size: 22px;
     font-family: HCR Dotum;
@@ -114,7 +115,7 @@
 }
 
 .InfoSub {
-    border: 2px solid blue;
+    
     white-space: nowrap;
     width: 300px;
     height: 50px;
@@ -125,7 +126,7 @@
 
 .InfoSub span {
     
-    border: 2px solid red;
+    
     font-size: 15px;
     font-family: HCR Dotum;
     font-weight: 700;

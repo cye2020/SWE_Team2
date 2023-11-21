@@ -77,7 +77,28 @@
 
 
             <div class="body">
-                <form action="/free/post" method="post">
+                {% if topic=="free"%}
+                    <form action="/free/post" method="post">
+                        <!--title-->
+                        <input type="text" name="title" class="title_input" placeholder="제목을 입력해주세요">
+                        <br>
+                        <div class="chk">
+                            <!--anon-->
+                            <input type="checkbox" name="anon" id="anonymous">
+                            <span>익명 글 작성하기</span>
+                        </div>
+                        <!--content-->
+                        <textarea name="content" id="" placeholder="본문을 입력하세요."></textarea>
+                        <!--timestamp-->
+                        <input class="time" type="hidden" name="timestamp" id="timestamp" value=""> <!--시간필드-->
+                        <div class="bottom">
+                            <img src="http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg" alt="">
+                
+                            <button type="button" onclick="submitForm()">Post</button>
+                        </div>
+                    </form>
+                {% else %}
+                <form action="/contract/post" method="post">
                     <!--title-->
                     <input type="text" name="title" class="title_input" placeholder="제목을 입력해주세요">
                     <br>
@@ -86,6 +107,8 @@
                         <input type="checkbox" name="anon" id="anonymous">
                         <span>익명 글 작성하기</span>
                     </div>
+                    <input type="text" name="object" class="object_input" placeholder="물품:">
+                    <input type="text" name="price" class="price_input" placeholder="가격:">
                     <!--content-->
                     <textarea name="content" id="" placeholder="본문을 입력하세요."></textarea>
                     <!--timestamp-->
@@ -95,6 +118,7 @@
             
                         <button type="button" onclick="submitForm()">Post</button>
                     </div>
+                {%endif%}
                 </form>
             </div>
         </div>
