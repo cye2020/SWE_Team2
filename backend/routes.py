@@ -53,7 +53,7 @@ def register():
 
         flash('이메일로 인증 링크가 전송되었습니다. 이메일을 확인해주세요.', 'info')
         return redirect(url_for('register'))
-    return render_template("signin.html",form=form)
+    return render_template("register.html",form=form)
 
 
 # 이메일 인증 페이지
