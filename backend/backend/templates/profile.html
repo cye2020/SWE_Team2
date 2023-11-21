@@ -1,0 +1,32 @@
+<!-- templates/profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로필 페이지</title>
+</head>
+<body>
+    <h1>프로필 페이지</h1>
+    <h2>프로필 정보</h2>
+    <p>닉네임: {{ current_user.nickname }}</p>
+    <p>이메일: {{ current_user.login_id }}</p>
+
+    <h2>프로필 변경</h2>
+    <form method="POST" action="{{ url_for('update_profile') }}">
+        <label for="nickname">닉네임 변경:</label>
+        <input type="text" name="nickname" id="nickname" required>
+        <br>
+        <label for="password">비밀번호 변경:</label>
+        <input type="password" name="password" id="password" required>
+        <br>
+        <input type="submit" value="프로필 변경">
+    </form>
+
+    <h2>회원 탈퇴</h2>
+    <form method="POST" action="{{ url_for('delete_account') }}">
+        <input type="submit" value="회원 탈퇴">
+    </form>
+</body>
+</html>

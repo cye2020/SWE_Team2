@@ -11,56 +11,32 @@ db.init_app(app)
 @app.route('/house/filter', methods=['GET'])
 def filter_houses():
     try:
+        # "reset"으로 모든 필터를 초기화하고 전체 항목을 반환
         if 'reset' in request.args:
-            # 전체 데이터를 반환
-            all_houses = House.query.all()
-            result = [
-                {
-                    'house_id': house.house_id,
-                    'house_type': house.house_type,
-                    'pay_type': house.pay_type,
-                    'lat': house.lat,
-                    'lon': house.lon,
-                    'feature': house.feature,
-                    'direction': house.direction,
-                    'floor': house.floor,
-                    'prc': house.prc,
-                    'rentprc': house.rentprc,
-                    'space1': house.space1,
-                    'space2': house.space2,
-                    'taglist': house.taglist,
-                    'imgurl': house.imgurl
-                }
-                for house in all_houses
-            ]
+            query = House.query
         
         else:
-           # 필터 기준을 받아오기
-            house_type_filters = request.args.getlist('house_type[]')
-            print(f"Filters: {house_type_filters}")
-            print(f"Args: {request.args}")
-            pay_type_filters = request.args.getlist('pay_type[]')
-            prc_filter = request.args.get('prc_lt[]')
-            rentprc_filter = request.args.get('rentprc_lt[]')
-            space2_filter = request.args.get('space2_lt[]')
-            taglist_filter = request.args.get('taglist[]')
-            direction_filter = request.args.get('direction[]')
+            # 필터 기준을 받아오기
+            house_type_filters = request.args.getlist('house_type')
+            pay_type_filters = request.args.getlist('pay_type')
+            prc_filter = request.args.get('prc_lt')
+            rentprc_filter = request.args.get('rentprc_lt')
+            space2_filter = request.args.get('space2_lt')
+            taglist_filters = request.args.getlist('taglist')
+            direction_filters = request.args.getlist('direction')
 
             # 필터 조건에 따라 쿼리 작성
             query = House.query
 
             # 중복 선택 가능 영역
             if house_type_filters:
-                query = query.filter(House.house_type.in_(house_type_filters))
-                print(query)
+                query = query.filter(or_(*[House.house_type == house_type for house_type in house_type_filters]))
             if pay_type_filters:
-                query = query.filter(House.pay_type.in_(pay_type_filters))
-
-            # 단일 선택(문자열)
-            if direction_filter:
-                query = query.filter(House.direction == direction_filter)
-            if taglist_filter:
-                query = query.filter(House.taglist.contains([taglist_filter]))
+                query = query.filter(or_(*[House.pay_type == pay_type for pay_type in pay_type_filters]))
+            if direction_filters:
+                query = query.filter(or_(*[House.direction == direction for direction in direction_filters]))
+            if taglist_filters:
+                query = query.filter(or_(*[House.taglist.contains([tag]) for tag in taglist_filters]))
 
             # 단일 선택(숫자값 이하)
             if prc_filter:
@@ -72,15 +48,15 @@ def filter_houses():
 
             # 정렬 기준에 따라 쿼리 작성
             if 'sort' in request.args:
-                sort_by = request.args.get('sort[]')
+                sort_by = request.args.get('sort')
                 if sort_by == 'prc': # /filter?sort=prc&order=(ascend)or(descend)
                     # prc가 0보다 큰 경우에만 정렬 수행, prc가 0인 경우 전세임.
                     query = query.filter(House.prc > 0)
-                    query = query.order_by(House.prc.asc() if request.args.get('order[]') != 'descend' else House.prc.desc())
+                    query = query.order_by(House.prc.asc() if request.args.get('order') != 'descend' else House.prc.desc())
                 elif sort_by == 'rentprc':
-                    query = query.order_by(House.rentprc.asc() if request.args.get('order[]') != 'descend' else House.rentprc.desc())
+                    query = query.order_by(House.rentprc.asc() if request.args.get('order') != 'descend' else House.rentprc.desc())
                 elif sort_by == 'space2':
-                    query = query.order_by(House.space2.asc() if request.args.get('order[]') != 'descend' else House.space2.desc())
+                    query = query.order_by(House.space2.asc() if request.args.get('order') != 'descend' else House.space2.desc())
 
             # 필터된 매물 정보를 JSON 형태로 변환하여 반환
             result = []
@@ -103,25 +79,20 @@ def filter_houses():
                     'imgurl': house.imgurl
                 })
             app.logger.info(f"받은 매개변수: {request.args}")
-            print(query)
-            print("filtered")
+            print(result)
 
-        return jsonify(result)
+        return render_template('a.html', houses=result)
 
     except Exception as e:
         return jsonify({'error': str(e)})
 
-@app.route('/house/<house_id>', methods=['GET'])
-def get_house_details(house_id):
-    house = House.query.filter_by(house_id=house_id).first()
+# / 주소로 접근 시 /house로 리다이렉트
+@app.route('/')
+def index():
+    return redirect(url_for('house'))
 
-    if house:
-        return render_template('house_details.html', house=house)
-    else:
-        return jsonify({'error': 'House not found'}), 404 
-
-@app.route('/house/init', methods=['GET'])
-def initial():
+@app.route('/house', methods=['GET'])
+def house():
     try:
         # 전체 주소를 가져오기
         all_houses = House.query.all()
@@ -140,17 +111,17 @@ def initial():
                 'floor': house.floor,
                 'prc': house.prc,
                 'rentprc': house.rentprc,
+                'space1': house.space1,
+                'space2': house.space2,
+                'taglist': house.taglist,
+                'imgurl': house.imgurl
             })
         app.logger.info("전체 매물 정보를 가져왔습니다.")
 
         return jsonify(result)
-    
+
     except Exception as e:
         return jsonify({'error': str(e)})
-
-@app.route('/house')
-def house():
-    return render_template('real.html') 
 
 if __name__ == '__main__':
     print(app.url_map)
