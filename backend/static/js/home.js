@@ -18,7 +18,7 @@ estateIcon.addEventListener('click', () => {
 
 bulletinIcon.addEventListener('click', () => {
     // Navigate to the bulletin page
-    window.location.href = 'bulletin.html';
+    window.location.href = '/board';
 });
 
 profileIcon.addEventListener('click', () => {
