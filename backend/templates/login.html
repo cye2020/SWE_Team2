@@ -34,7 +34,7 @@
             <form method="POST" action="{{ url_for('login') }}">
                 {{ form.hidden_tag() }}
                 <div class="inputBox" style="top: 35px;">
-                  {{ form.email(placeholder=form.email.label.text, value="", id="email") }}
+                  {{ form.email }}
                   <div class="invalid-feedback">
                     {% for error in form.email.errors %}
                         <span>{{ error }}</span>
