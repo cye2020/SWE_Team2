@@ -6,6 +6,7 @@
 
 <div class="container py-4 text-center">
     {% if current_user.is_authenticated %}
+    {% comment %} 여기가 homepage layout!  {% endcomment %}
         <h1>Welcome {{ current_user.username }}</h1>
         <a href="{{url_for('update_profile')}}">Profile</a>
         <a href="{{url_for('logout')}}">Logout</a>
