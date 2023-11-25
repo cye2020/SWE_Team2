@@ -56,10 +56,17 @@
         function submitForm() {
             // 현재 시간 생성
             var now = new Date();
-            var timestamp = now.toISOString();  // 형식: "2023-11-19T12:34:56.789Z"
             
+            var formattedDate = new Intl.DateTimeFormat('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }).format(now);
             // 폼의 timestamp 필드에 현재 시간 설정
-            document.getElementById("timestamp").value = timestamp;
+            document.getElementById("timestamp").value = formattedDate;
         
             // 폼 제출
             document.querySelector('form').submit();
