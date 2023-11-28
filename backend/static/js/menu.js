@@ -23,6 +23,6 @@ bulletinIcon.addEventListener('click', () => {
 
 logoutIcon.addEventListener('click', () => {
     // Redirect to the logout page
-    window.location.href = '/logout';
+    window.location.href = '{{url_for('logout')}}';
 });
 
