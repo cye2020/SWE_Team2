@@ -16,6 +16,7 @@ token_manager = TokenManager()
 
 #부동산페이지
 @app.route('/house')
+@login_required
 def house():
     return render_template('real.html') 
 
@@ -164,6 +165,7 @@ def initial():
 
 #게시판페이지
 @app.route('/board')
+@login_required
 def board():
     try:
 
@@ -345,14 +347,17 @@ def delete_account():
     return redirect(url_for('index'))
 
 @app.route('/home')
+@login_required
 def home():
     return render_template('home.html')
 
 @app.route('/profile_page')
+@login_required
 def profile_page():
     return render_template('profile.html')
-
+  
 @app.route('/set')
+@login_required
 def set():
     return render_template('information.html')
 # Home route

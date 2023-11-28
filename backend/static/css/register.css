@@ -78,5 +78,6 @@ a{
 
 /* 이메일 토큰 인증 flash 리스트 점 없애기 */
 ul {
+    padding-left: 0;
     list-style:none;
 }
