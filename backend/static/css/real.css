@@ -54,6 +54,7 @@ body {
 }
 
 .Filters {
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -80,6 +81,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
 
 label, input, select {
@@ -88,6 +90,8 @@ label, input, select {
 
 input[type="submit"],
 button {
+    width: 200px;
+    height: 120px;
     padding: 10px 20px; /* Adjust padding to your liking */
     font-size: 18px; /* Adjust font size to your liking */
     background-color: #4CAF50; /* Green background color */
@@ -95,6 +99,12 @@ button {
     border: none; /* Remove border */
     border-radius: 5px; /* Optional: Add border-radius for rounded corners */
     cursor: pointer;
+}
+
+button {
+    background-color: #FF0000; /* 빨간색 또는 원하는 색상으로 변경 */
+    color: white;
+    border: none;
 }
 
 /* Style checkboxes */
