@@ -1,14 +1,17 @@
 
 .Titlelogo {
-  width: 586px;
-  color: black;
+  width: 700px;
+  background: linear-gradient(45deg, #139D7E, #2B6653);
+  -webkit-background-clip: text; /* For Safari/Chrome */
+  color: transparent;
   font-size: 70px;
-  font-family: 'HCR Dotum';
-  font-weight: 700;
+  font-family: 'Black Han Sans', sans-serif;
   word-wrap: break-word;
   margin-right: 20px;
+  margin-left: 35px;
   margin-top: 20px; /* Adjust this margin as needed */
   margin-bottom: 20px; /* Adjust this margin as needed */
+  
 }
 
 .Noticeframe {
