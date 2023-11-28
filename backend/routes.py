@@ -180,20 +180,16 @@ def board():
 def post_free():
     #title과 content 가져오기
     title=request.form.get('title')
-    anon_status=request.form.get('anon')
+    is_anonymous = 'anon' in request.form
     content=request.form.get('content')
     create_date=request.form.get('timestamp')
 
     
-    #익명여부
-    if anon_status=='none':
-        anon=False
-    else:
-        anon=True
+    
     
 
     #DB에 저장할 board_post 객체 생성
-    new_post=free_post(title=title,content=content, anon=anon,create_date=create_date,nickname=current_user.nickname)
+    new_post=free_post(title=title,content=content, anon=is_anonymous,create_date=create_date,nickname=current_user.nickname)
     
     db.session.add(new_post)
     db.session.commit()  
@@ -205,21 +201,17 @@ def post_free():
 def post_contract():
     #title과 content 가져오기
     title=request.form.get('title')
-    anon_status=request.form.get('anon')
+    is_anonymous = 'anon' in request.form
     content=request.form.get('content')
     object=request.form.get('object')
     price=request.form.get('price')
     create_date=request.form.get('timestamp')
     
-    #익명여부
-    if anon_status=='none':
-        anon=False
-    else:
-        anon=True
+    
     
 
     #DB에 저장할 board_post 객체 생성
-    new_post=contract_post(title=title,content=content,price=price, anon=anon,create_date=create_date,nickname=current_user.nickname)
+    new_post=contract_post(title=title,content=content,price=price, anon=is_anonymous,create_date=create_date,nickname=current_user.nickname)
     
     db.session.add(new_post)
     db.session.commit()

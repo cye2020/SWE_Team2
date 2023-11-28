@@ -112,15 +112,15 @@
                             <img src="http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg" alt="">
                         
                             <div class="Line1"></div>
-                            <div class="InfoTitle">{{post.title}}</div>
+                            <div class="InfoTitle">{{post.title}} (가격: {{post.price}})</div>
                             <div class="InfoSub">
                                 <span>{{post.content}}<br /><br /></span>
                                 {% if post.anon %}
-                                <span>작성자 : 익명의 사용자</span>
+                                <span>작성자 : 익명의 사용자 ({{post.create_date}})</span>
                                 {% else %}
-                                <span>작성자 : {{post.nickname}}</span>
+                                <span>작성자 : {{post.nickname}} ({{post.create_date}})</span>
                                 {% endif %}
-                                <span>작성일 : {{post.create_date}}</span>
+                                
                             </div>
                         </div>
                         {% endfor %}
