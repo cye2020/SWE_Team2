@@ -286,7 +286,9 @@
     position: absolute;
 }
 
-.InfoSub span {
+
+
+.InfoSub span{
     font-size: 15px;
     font-family: HCR Dotum;
     font-weight: 700;
@@ -295,8 +297,11 @@
 }
 
 .InfoSub span:last-child {
-    font-size: 11px;
+    font-size: 13px;
 }
+
+
+
 
 /* 버튼 */
 .Morebutton {

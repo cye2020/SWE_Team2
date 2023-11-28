@@ -180,8 +180,8 @@ def post_free():
     title=request.form.get('title')
     anon_status=request.form.get('anon')
     content=request.form.get('content')
-    writer_id="peterjm007@naver.com"
     create_date=request.form.get('timestamp')
+
     
     #익명여부
     if anon_status=='none':
@@ -191,7 +191,7 @@ def post_free():
     
 
     #DB에 저장할 board_post 객체 생성
-    new_post=free_post(title=title,content=content, anon=anon,writer_id=writer_id,create_date=create_date)
+    new_post=free_post(title=title,content=content, anon=anon,create_date=create_date,nickname=current_user.nickname)
     
     db.session.add(new_post)
     db.session.commit()  
@@ -207,7 +207,6 @@ def post_contract():
     content=request.form.get('content')
     object=request.form.get('object')
     price=request.form.get('price')
-    writer_id="peterjm007@naver.com"
     create_date=request.form.get('timestamp')
     
     #익명여부
@@ -218,7 +217,7 @@ def post_contract():
     
 
     #DB에 저장할 board_post 객체 생성
-    new_post=contract_post(title=title,content=content,price=price, anon=anon,writer_id=writer_id,create_date=create_date)
+    new_post=contract_post(title=title,content=content,price=price, anon=anon,create_date=create_date,nickname=current_user.nickname)
     
     db.session.add(new_post)
     db.session.commit()

@@ -66,7 +66,11 @@
                             <div class="InfoTitle">{{post.title}}</div>
                             <div class="InfoSub">
                                 <span>{{post.content}}<br /><br /></span>
-                                <span>작성일 : {{post.create_date}}</span>
+                                {% if post.anon %}
+                                <span>작성자 : 익명의 사용자 ({{post.create_date}})</span>
+                                {% else %}
+                                <span>작성자 : {{(post.nickname)}} ({{post.create_date}})</span>
+                                {% endif %}
                             </div>
                         </div>
                         {% endfor %}
@@ -111,6 +115,11 @@
                             <div class="InfoTitle">{{post.title}}</div>
                             <div class="InfoSub">
                                 <span>{{post.content}}<br /><br /></span>
+                                {% if post.anon %}
+                                <span>작성자 : 익명의 사용자</span>
+                                {% else %}
+                                <span>작성자 : {{post.nickname}}</span>
+                                {% endif %}
                                 <span>작성일 : {{post.create_date}}</span>
                             </div>
                         </div>
