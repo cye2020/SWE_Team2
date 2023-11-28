@@ -60,7 +60,6 @@
   left: 0; /* Align to the left */
   padding-left: 13px;
   padding-right: 13px;
-  padding-top: 28px;
   padding-bottom: 28px;
   background: white;
   border-radius: 37px;
@@ -70,6 +69,19 @@
   align-items: flex-start;
   gap: 32px;
   display: inline-flex;
+}
+
+.container {
+  padding-left: 40px;
+}
+
+h1, h2 {
+  color: #2B6653;
+  font-family: 'HCR Dotum';
+}
+
+p, li {
+  font-family: 'HCR Dotum';
 }
 
 
