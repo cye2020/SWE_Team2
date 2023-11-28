@@ -7,7 +7,7 @@
 
 body{
     font-family: 'Product Sans KR', sans-serif;
-    font-size:14px;
+    font-size:20px;
     background-color: #f5f6f7;
     line-height: 1.5em;
     color : #222;
@@ -20,7 +20,7 @@ a{
 }
 
 .member{
-    width: 400px;
+    width: 600px;
     margin: auto; 
     padding: 0 20px;
     margin-bottom: 20px;
@@ -49,8 +49,9 @@ a{
 
 .member input[type=button],
 .member input[type=submit]{
-background-color: #285C4D;
-color:#fff
+    background-color: #285C4D;
+    color:#fff;
+    font-size: 25px;
 }
 
 .member input:focus, .member select:focus{
