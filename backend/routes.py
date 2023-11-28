@@ -45,6 +45,16 @@ def filter_houses():
                 }
                 for house in all_houses
             ]
+
+            house_type_filters = []
+            pay_type_filters = []
+            prc_filter = None
+            rentprc_filter = None
+            space2_filter = None
+            taglist_filter = None
+            direction_filter = None
+
+            query = House.query.filter(House.house_type.in_(house_type_filters))
         
         else:
            # 필터 기준을 받아오기
@@ -83,16 +93,16 @@ def filter_houses():
                 query = query.filter(House.space2 <= int(space2_filter))
 
             # 정렬 기준에 따라 쿼리 작성
-            if 'sort' in request.args:
-                sort_by = request.args.get('sort[]')
-                if sort_by == 'prc': # /filter?sort=prc&order=(ascend)or(descend)
-                    # prc가 0보다 큰 경우에만 정렬 수행, prc가 0인 경우 전세임.
-                    query = query.filter(House.prc > 0)
-                    query = query.order_by(House.prc.asc() if request.args.get('order[]') != 'descend' else House.prc.desc())
-                elif sort_by == 'rentprc':
-                    query = query.order_by(House.rentprc.asc() if request.args.get('order[]') != 'descend' else House.rentprc.desc())
-                elif sort_by == 'space2':
-                    query = query.order_by(House.space2.asc() if request.args.get('order[]') != 'descend' else House.space2.desc())
+            # if 'sort' in request.args:
+            #     sort_by = request.args.get('sort[]')
+            #     if sort_by == 'prc': # /filter?sort=prc&order=(ascend)or(descend)
+            #         # prc가 0보다 큰 경우에만 정렬 수행, prc가 0인 경우 전세임.
+            #         query = query.filter(House.prc > 0)
+            #         query = query.order_by(House.prc.asc() if request.args.get('order[]') != 'descend' else House.prc.desc())
+            #     elif sort_by == 'rentprc':
+            #         query = query.order_by(House.rentprc.asc() if request.args.get('order[]') != 'descend' else House.rentprc.desc())
+            #     elif sort_by == 'space2':
+            #         query = query.order_by(House.space2.asc() if request.args.get('order[]') != 'descend' else House.space2.desc())
 
             # 필터된 매물 정보를 JSON 형태로 변환하여 반환
             result = []

@@ -55,7 +55,7 @@ function applyFilters() {
     var prcLtInput = document.querySelector('input[name=prc_lt]');
     var rentprcLtInput = document.querySelector('input[name=rentprc_lt]');
     var spc2LtInput = document.querySelector('input[name=space2_lt]');
-    var taglistInput = document.querySelector('input[name=taglist]');
+    // var taglistInput = document.querySelector('input[name=taglist]');
     var directionInput = document.querySelector('input[name=direction]');
     // var sortSelect = document.querySelector('select[name=sort]');
     // var orderSelect = document.querySelector('select[name=order]');
@@ -89,6 +89,7 @@ function applyFilters() {
         .filter(key => filterObject[key] !== null)
         .map(key => {
             if (Array.isArray(filterObject[key])) {
+                console.log(filterObject[key]);
                 return filterObject[key].map(value => `${key}[]=${encodeURIComponent(value)}`).join('&');
             } else {
                 return `${key}[]=${encodeURIComponent(filterObject[key])}`;
@@ -132,13 +133,14 @@ function resetFilters() {
     console.log(filterInputs);
     filterInputs.forEach(function (input) {
         input.value = '';
+        console.log(input.checked);
         if (input.type === 'checkbox') {
             input.checked = false;
         }
     });
-    
+    console.log('After Reset - Checkbox States:', Array.from(document.querySelectorAll('input[type="checkbox"]')).map(checkbox => checkbox.checked));   
     console.log('Reset start');
-    fetch('/house/init', {
+    fetch('/house/filter?reset=true', {  // Add the reset parameter
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -155,6 +157,4 @@ function resetFilters() {
         // Handle any errors that occurred during the fetch
         console.error('Error fetching data:', error);
     });
-    // // Trigger the applyFilters function to reload the original data
-    // applyFilters();
 }

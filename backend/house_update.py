@@ -31,9 +31,11 @@ def crawl_each_region(url): #각 동별 매물목록 url을 받아서 크롤링
     
     #각 동 url 설정
     if url == "율전동":
-        url_cluster = "https://m.land.naver.com/cluster/clusterList?view=atcl&cortarNo=4111113200&rletTpCd=OPST%3AVL%3ADDDGG%3ASGJT%3AOR%3AGSW&tradTpCd=B1%3AB2%3AB3&z=14&lat=37.297618&lon=126.971492&btm=37.2695846&lft=126.9305937&top=37.325641&rgt=127.0123903&pCortarNo=14_4111113200&addon=COMPLEX&bAddon=COMPLEX&isOnlyIsale=false"
+        url_cluster = "https://m.land.naver.com/cluster/clusterList?view=atcl&cortarNo=4111113200&rletTpCd=OPST%3AVL%3AOBYG%3ASGJT%3AOR%3AGSW&tradTpCd=B1%3AB2%3AB3&z=14&lat=37.297618&lon=126.971492&btm=37.2692772&lft=126.9335978&top=37.3259481&rgt=127.0093862&pCortarNo=14_4111113200&addon=COMPLEX&bAddon=COMPLEX&isOnlyIsale=false"
+    #     "https://m.land.naver.com/cluster/clusterList?view=atcl&cortarNo=4111113200&rletTpCd=OPST%3AVL%3ADDDGG%3ASGJT%3AOR%3AGSW&tradTpCd=B1%3AB2%3AB3&z=14&lat=37.297618&lon=126.971492&btm=37.2695846&lft=126.9305937&top=37.325641&rgt=127.0123903&pCortarNo=14_4111113200&addon=COMPLEX&bAddon=COMPLEX&isOnlyIsale=false"
     elif url == "천천동":
-        url_cluster = "https://m.land.naver.com/cluster/clusterList?view=atcl&cortarNo=4111113300&rletTpCd=OPST%3AVL%3ADDDGG%3ASGJT%3AOR%3AGSW&tradTpCd=B1%3AB2%3AB3&z=14&lat=37.295833&lon=126.978263&btm=37.2661596&lft=126.9394675&top=37.3254947&rgt=127.0170585&pCortarNo=&addon=COMPLEX&isOnlyIsale=false"
+        url_cluster = "https://m.land.naver.com/cluster/clusterList?view=atcl&cortarNo=4111113300&rletTpCd=OPST%3AVL%3AOBYG%3ASGJT%3AOR%3AGSW&tradTpCd=B1%3AB2%3AB3&z=14&lat=37.295833&lon=126.978263&btm=37.2674915&lft=126.9403688&top=37.3241638&rgt=127.0161572&pCortarNo=14_4111113200&addon=COMPLEX&bAddon=COMPLEX&isOnlyIsale=false"
+        # "https://m.land.naver.com/cluster/clusterList?view=atcl&cortarNo=4111113300&rletTpCd=OPST%3AVL%3ADDDGG%3ASGJT%3AOR%3AGSW&tradTpCd=B1%3AB2%3AB3&z=14&lat=37.295833&lon=126.978263&btm=37.2661596&lft=126.9394675&top=37.3254947&rgt=127.0170585&pCortarNo=&addon=COMPLEX&isOnlyIsale=false"
     else:
         print("Invalid input")
         return
