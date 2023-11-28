@@ -356,7 +356,7 @@ def delete_account():
     db.session.commit()
 
     logout_user()  # 로그아웃
-    flash('회원 탈퇴가 완료되었습니다.', 'success')
+    flash('로그아웃이 완료되었습니다.', 'success')
     return redirect(url_for('index'))
 
 @app.route('/home')
