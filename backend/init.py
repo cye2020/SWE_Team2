@@ -46,8 +46,3 @@ def create_app():
     cors.init_app(app)
     
     return app
-
-
-
-
-
