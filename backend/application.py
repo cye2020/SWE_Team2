@@ -7,7 +7,7 @@ from mail import send_verification_email
 from models import Member, House, free_post, contract_post
 
 
-app = create_app()
+application = create_app()
 # TokenManager 인스턴스 생성
 token_manager = TokenManager()
 
@@ -15,12 +15,12 @@ token_manager = TokenManager()
 ############## House ##################
 
 #부동산페이지
-@app.route('/house')
+@application.route('/house')
 @login_required
 def house():
     return render_template('real.html') 
 
-@app.route('/house/filter', methods=['GET'])
+@application.route('/house/filter', methods=['GET'])
 def filter_houses():
     try:
         if 'reset' in request.args:
@@ -124,7 +124,7 @@ def filter_houses():
                     'taglist': house.taglist,
                     'imgurl': house.imgurl
                 })
-            app.logger.info(f"받은 매개변수: {request.args}")
+            application.logger.info(f"받은 매개변수: {request.args}")
             print(query)
             print("filtered")
 
@@ -134,7 +134,7 @@ def filter_houses():
         return jsonify({'error': str(e)})
     
 #매물 세부정보 페이지 
-@app.route('/house/<house_id>', methods=['GET'])
+@application.route('/house/<house_id>', methods=['GET'])
 def get_house_details(house_id):
     house = House.query.filter_by(house_id=house_id).first()
 
@@ -143,7 +143,7 @@ def get_house_details(house_id):
     else:
         return jsonify({'error': 'House not found'}), 404 
 
-@app.route('/house/init', methods=['GET'])
+@application.route('/house/init', methods=['GET'])
 def initial():
     try:
         # 전체 주소를 가져오기
@@ -164,7 +164,7 @@ def initial():
                 'prc': house.prc,
                 'rentprc': house.rentprc,
             })
-        app.logger.info("전체 매물 정보를 가져왔습니다.")
+        application.logger.info("전체 매물 정보를 가져왔습니다.")
 
         return jsonify(result)
     
@@ -174,7 +174,7 @@ def initial():
 ############## Board ##################
 
 #게시판페이지
-@app.route('/board')
+@application.route('/board')
 @login_required
 def board():
     try:
@@ -186,7 +186,7 @@ def board():
     except:
         return render_template("bulletin.html")
 #POST 게시물 DB(post)에 저장(완료)
-@app.route('/free/post', methods=['POST'])
+@application.route('/free/post', methods=['POST'])
 def post_free():
     #title과 content 가져오기
     title=request.form.get('title')
@@ -207,7 +207,7 @@ def post_free():
 
 
 #POST 게시물 DB(contract_post)에 저장(완료)
-@app.route('/contract/post', methods=['POST'])
+@application.route('/contract/post', methods=['POST'])
 def post_contract():
     #title과 content 가져오기
     title=request.form.get('title')
@@ -230,7 +230,7 @@ def post_contract():
     
 
 
-@app.route('/move/<string:topic>', methods=['GET'])
+@application.route('/move/<string:topic>', methods=['GET'])
 def move(topic):
     
 
@@ -244,7 +244,7 @@ def load_user(login_id):
     return db.session.get(Member, login_id)
 
 # Login route
-@app.route("/login/", methods=("GET", "POST"), strict_slashes=False)
+@application.route("/login/", methods=("GET", "POST"), strict_slashes=False)
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -256,7 +256,7 @@ def login():
 
 
 # Register route
-@app.route("/register/", methods=("GET", "POST"), strict_slashes=False)
+@application.route("/register/", methods=("GET", "POST"), strict_slashes=False)
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
@@ -276,7 +276,7 @@ def register():
 
 
 # 이메일 인증 페이지
-@app.route('/verify/<token>')
+@application.route('/verify/<token>')
 def verify_email(token):
 
     if token_manager.verify_token(token):
@@ -305,7 +305,7 @@ def unauthorized():
 
 
 # 프로필 변경 페이지
-@app.route('/profile', methods=['GET', 'POST'])
+@application.route('/profile', methods=['GET', 'POST'])
 @login_required
 def update_profile():
     if request.method == 'POST':
@@ -327,7 +327,7 @@ def update_profile():
 
 
 # 로그아웃 라우트 추가
-@app.route('/logout')
+@application.route('/logout')
 @login_required
 def logout():
     logout_user()
@@ -336,7 +336,7 @@ def logout():
 
 
 # 회원 탈퇴 기능
-@app.route('/delete_account', methods=['POST'])
+@application.route('/delete_account', methods=['POST'])
 @login_required
 def delete_account():
     # 로그인된 사용자를 데이터베이스에서 삭제
@@ -347,22 +347,22 @@ def delete_account():
     flash('로그아웃이 완료되었습니다.', 'success')
     return redirect(url_for('index'))
 
-@app.route('/home')
+@application.route('/home')
 @login_required
 def home():
     return render_template('home.html')
 
-@app.route('/profile_page')
+@application.route('/profile_page')
 @login_required
 def profile_page():
     return render_template('profile.html')
   
-@app.route('/set')
+@application.route('/set')
 @login_required
 def set():
     return render_template('information.html')
 # Home route
-@app.route("/", methods=("GET", "POST"), strict_slashes=False)
+@application.route("/", methods=("GET", "POST"), strict_slashes=False)
 def index():
     return render_template("userauth.html",title="Home")
 
@@ -373,4 +373,4 @@ scheduler.start()
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    application.run(debug=True)
