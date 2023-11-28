@@ -6,7 +6,7 @@ from sqlalchemy import event
 import math
 import json
 import logging
-
+from models import House
 # Configure logging
 logging.basicConfig(level=logging.ERROR)
 
@@ -14,22 +14,6 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:peter0107@database-1.cc0lokhfxaeb.us-east-2.rds.amazonaws.com:3306/software_database'
 db = SQLAlchemy(app)
 
-class House(db.Model):
-    
-    house_id = db.Column('house_id', db.BigInteger, primary_key=True, nullable=False, default=0)
-    house_type = db.Column('house_type', db.String(50), nullable=False, default='')
-    pay_type = db.Column('pay_type', db.String(20), nullable=False, default='')
-    lat = db.Column('lat', db.Float, nullable=False, default=0.0)
-    lon = db.Column('lon', db.Float, nullable=False, default=0.0)
-    feature = db.Column('feature', db.String(255), nullable=True, default=None)
-    direction = db.Column('direction', db.String(20), nullable=False, default='')
-    floor = db.Column('floor', db.String(10), nullable=True, default=None)
-    prc = db.Column('prc', db.Integer, nullable=False, default=0)
-    rentprc = db.Column('rentprc', db.Integer, nullable=False, default=0)
-    space1 = db.Column('space1', db.Integer, nullable=True, default=None)
-    space2 = db.Column('space2', db.Integer, nullable=True, default=None)
-    taglist = db.Column('taglist', db.JSON, nullable=False, default={})
-    imgurl = db.Column('imgurl', db.String(255), nullable=True, default=None)
 
 
 def crawl_each_region(url): #각 동별 매물목록 url을 받아서 크롤링
