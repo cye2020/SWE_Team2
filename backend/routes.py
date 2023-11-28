@@ -342,6 +342,7 @@ def delete_account():
     return redirect(url_for('index'))
 
 @app.route('/home')
+@login_required
 def home():
     return render_template('home.html')
 
@@ -350,6 +351,7 @@ def profile_page():
     return render_template('profile.html')
 
 @app.route('/board')
+@login_required
 def board():
     try:
 
@@ -361,8 +363,10 @@ def board():
         return render_template("bulletin.html")
 
 @app.route('/house')
+@login_required
 def house():
     return render_template('real.html') 
+
 @app.route('/set')
 def set():
     return render_template('information.html')
