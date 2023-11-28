@@ -4,31 +4,20 @@ from init import login_manager, scheduler, db, bcrypt, create_app
 from forms import RegisterForm, LoginForm
 from token_manager import TokenManager
 from mail import send_verification_email
-from models import Member, House
+from models import Member, House, free_post, contract_post
 
 
 app = create_app()
+# TokenManager 인스턴스 생성
+token_manager = TokenManager()
 
 
-class free_post(db.Model):
-    __tablename__='free_post'
-    seq=db.Column('seq',db.Integer,nullable=False,autoincrement=True,primary_key=True)
-    title=db.Column('title',db.VARCHAR(30),nullable=True)
-    content=db.Column('content',db.Text,nullable=True)
-    writer_id=db.Column('writer_id',db.VARCHAR(30),nullable=True)
-    create_date=db.Column('create_date',db.VARCHAR(20),nullable=True)
-    anon=db.Column('anon',db.Boolean,nullable=False, default=False)
+############## House ##################
 
-class contract_post(db.Model):
-    __tablename__='contract_post'
-    seq=db.Column('seq',db.Integer,nullable=False,autoincrement=True,primary_key=True)
-    title=db.Column('title',db.VARCHAR(30),nullable=True)
-    object=db.Column('object',db.VARCHAR(20),nullable=True)
-    price=db.Column('price',db.VARCHAR(20),nullable=True)
-    content=db.Column('content',db.Text,nullable=True)
-    writer_id=db.Column('writer_id',db.VARCHAR(30),nullable=True)
-    create_date=db.Column('create_date',db.VARCHAR(20),nullable=True)
-    anon=db.Column('anon',db.Boolean,nullable=False, default=False)
+#부동산페이지
+@app.route('/house')
+def house():
+    return render_template('real.html') 
 
 @app.route('/house/filter', methods=['GET'])
 def filter_houses():
@@ -133,72 +122,6 @@ def filter_houses():
     except Exception as e:
         return jsonify({'error': str(e)})
     
-#POST 게시물 DB(post)에 저장(완료)
-@app.route('/free/post', methods=['POST'])
-def post_free():
-    #title과 content 가져오기
-    title=request.form.get('title')
-    anon_status=request.form.get('anon')
-    content=request.form.get('content')
-    writer_id="peterjm007@naver.com"
-    create_date=request.form.get('timestamp')
-    
-    #익명여부
-    if anon_status=='none':
-        anon=False
-    else:
-        anon=True
-    
-
-    #DB에 저장할 board_post 객체 생성
-    new_post=free_post(title=title,content=content, anon=anon,writer_id=writer_id,create_date=create_date)
-    
-    db.session.add(new_post)
-    db.session.commit()  
-    free_posts = free_post.query.order_by(free_post.create_date.desc()).limit(4).all()
-    contract_posts= contract_post.query.order_by(contract_post.create_date.desc()).limit(4).all()
-
-    return render_template("bulletin.html",free_posts=free_posts,contract_posts=contract_posts)
-
-
-#POST 게시물 DB(contract_post)에 저장(완료)
-@app.route('/contract/post', methods=['POST'])
-def post_contract():
-    #title과 content 가져오기
-    title=request.form.get('title')
-    anon_status=request.form.get('anon')
-    content=request.form.get('content')
-    object=request.form.get('object')
-    price=request.form.get('price')
-    writer_id="peterjm007@naver.com"
-    create_date=request.form.get('timestamp')
-    
-    #익명여부
-    if anon_status=='none':
-        anon=False
-    else:
-        anon=True
-    
-
-    #DB에 저장할 board_post 객체 생성
-    new_post=contract_post(title=title,content=content,price=price, anon=anon,writer_id=writer_id,create_date=create_date)
-    
-    db.session.add(new_post)
-    db.session.commit()
-    free_posts = free_post.query.order_by(free_post.create_date.desc()).limit(4).all()
-    contract_posts= contract_post.query.order_by(contract_post.create_date.desc()).limit(4).all()
-
-    return render_template("bulletin.html",free_posts=free_posts,contract_posts=contract_posts)
-    
-    
-
-
-@app.route('/move/<string:topic>', methods=['GET'])
-def move(topic):
-    
-
-    return render_template('notification.html',topic=topic)
-
 #매물 세부정보 페이지 
 @app.route('/house/<house_id>', methods=['GET'])
 def get_house_details(house_id):
@@ -236,24 +159,86 @@ def initial():
     
     except Exception as e:
         return jsonify({'error': str(e)})
+    
+############## Board ##################
+
+#게시판페이지
+@app.route('/board')
+def board():
+    try:
+
+        free_posts = free_post.query.order_by(free_post.create_date.desc()).all()
+        contract_posts= contract_post.query.order_by(contract_post.create_date.desc()).all()
+
+        return render_template("bulletin.html",free_posts=free_posts,contract_posts=contract_posts)
+    except:
+        return render_template("bulletin.html")
+#POST 게시물 DB(post)에 저장(완료)
+@app.route('/free/post', methods=['POST'])
+def post_free():
+    #title과 content 가져오기
+    title=request.form.get('title')
+    anon_status=request.form.get('anon')
+    content=request.form.get('content')
+    writer_id="peterjm007@naver.com"
+    create_date=request.form.get('timestamp')
+    
+    #익명여부
+    if anon_status=='none':
+        anon=False
+    else:
+        anon=True
+    
+
+    #DB에 저장할 board_post 객체 생성
+    new_post=free_post(title=title,content=content, anon=anon,writer_id=writer_id,create_date=create_date)
+    
+    db.session.add(new_post)
+    db.session.commit()  
+    return redirect(url_for('board'))
+
+
+#POST 게시물 DB(contract_post)에 저장(완료)
+@app.route('/contract/post', methods=['POST'])
+def post_contract():
+    #title과 content 가져오기
+    title=request.form.get('title')
+    anon_status=request.form.get('anon')
+    content=request.form.get('content')
+    object=request.form.get('object')
+    price=request.form.get('price')
+    writer_id="peterjm007@naver.com"
+    create_date=request.form.get('timestamp')
+    
+    #익명여부
+    if anon_status=='none':
+        anon=False
+    else:
+        anon=True
+    
+
+    #DB에 저장할 board_post 객체 생성
+    new_post=contract_post(title=title,content=content,price=price, anon=anon,writer_id=writer_id,create_date=create_date)
+    
+    db.session.add(new_post)
+    db.session.commit()
+    return redirect(url_for('board'))
+    
+    
+
+
+@app.route('/move/<string:topic>', methods=['GET'])
+def move(topic):
+    
+
+    return render_template('notification.html',topic=topic)
 
 
 
-# TokenManager 인스턴스 생성
-token_manager = TokenManager()
-
-
-
+############## Login ##################
 @login_manager.user_loader
 def load_user(login_id):
     return db.session.get(Member, login_id)
-
-
-# Home route
-@app.route("/", methods=("GET", "POST"), strict_slashes=False)
-def index():
-    return render_template("userauth.html",title="Home")
-
 
 # Login route
 @app.route("/login/", methods=("GET", "POST"), strict_slashes=False)
@@ -367,27 +352,13 @@ def home():
 def profile_page():
     return render_template('profile.html')
 
-@app.route('/board')
-def board():
-    try:
-
-        free_posts = free_post.query.order_by(free_post.create_date.desc()).limit(4).all()
-        contract_posts= contract_post.query.order_by(contract_post.create_date.desc()).limit(4).all()
-
-        return render_template("bulletin.html",free_posts=free_posts,contract_posts=contract_posts)
-    except:
-        return render_template("bulletin.html")
-
-# @app.route('/move/bulletin_page')
-# def move(bulletin_page):
-#     return render_template('bulletin.html')
-@app.route('/house')
-def house():
-    return render_template('real.html') 
 @app.route('/set')
 def set():
     return render_template('information.html')
-
+# Home route
+@app.route("/", methods=("GET", "POST"), strict_slashes=False)
+def index():
+    return render_template("userauth.html",title="Home")
 
 
 # Flask 애플리케이션에 스케줄러 추가

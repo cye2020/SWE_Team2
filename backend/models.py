@@ -31,3 +31,23 @@ class House(db.Model):
     space2 = db.Column('space2', db.Integer, nullable=True, default=None)
     taglist = db.Column('taglist', db.JSON, nullable=False, default={})
     imgurl = db.Column('imgurl', db.String(255), nullable=True, default=None)
+
+class free_post(db.Model):
+    __tablename__='free_post'
+    seq=db.Column('seq',db.Integer,nullable=False,autoincrement=True,primary_key=True)
+    title=db.Column('title',db.VARCHAR(30),nullable=True)
+    content=db.Column('content',db.Text,nullable=True)
+    writer_id=db.Column('writer_id',db.VARCHAR(30),nullable=True)
+    create_date=db.Column('create_date',db.VARCHAR(20),nullable=True)
+    anon=db.Column('anon',db.Boolean,nullable=False, default=False)
+
+class contract_post(db.Model):
+    __tablename__='contract_post'
+    seq=db.Column('seq',db.Integer,nullable=False,autoincrement=True,primary_key=True)
+    title=db.Column('title',db.VARCHAR(30),nullable=True)
+    object=db.Column('object',db.VARCHAR(20),nullable=True)
+    price=db.Column('price',db.VARCHAR(20),nullable=True)
+    content=db.Column('content',db.Text,nullable=True)
+    writer_id=db.Column('writer_id',db.VARCHAR(30),nullable=True)
+    create_date=db.Column('create_date',db.VARCHAR(20),nullable=True)
+    anon=db.Column('anon',db.Boolean,nullable=False, default=False)
