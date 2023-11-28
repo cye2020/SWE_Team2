@@ -20,7 +20,6 @@ bulletinIcon.addEventListener('click', () => {
     window.location.href = '/board';
 });
 
-
 logoutIcon.addEventListener('click', () => {
     // Redirect to the logout page
     window.location.href = '/logout';
