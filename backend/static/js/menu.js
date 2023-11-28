@@ -8,12 +8,12 @@ const settingIcon = document.getElementById('settingIcon');
 // Add click event listeners
 homeIcon.addEventListener('click', () => {
     // Navigate to the home page
-    window.location.href = 'home.html';
+    window.location.href = '/home';
 });
 
 estateIcon.addEventListener('click', () => {
     // Navigate to the estate page
-    window.location.href = '/house';
+    window.location.href = '/real';
 });
 
 bulletinIcon.addEventListener('click', () => {
@@ -23,10 +23,10 @@ bulletinIcon.addEventListener('click', () => {
 
 profileIcon.addEventListener('click', () => {
     // Navigate to the profile page
-    window.location.href = 'profile.html';
+    window.location.href = '/profile_page';
 });
 
 settingIcon.addEventListener('click', () => {
     // Navigate to the setting page
-    window.location.href = 'setting.html';
+    window.location.href = '/set';
 });

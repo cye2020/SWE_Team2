@@ -128,6 +128,29 @@ def delete_account():
     flash('회원 탈퇴가 완료되었습니다.', 'success')
     return redirect(url_for('index'))
 
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
+@app.route('/real')
+def real():
+    return render_template('real.html')
+
+@app.route('/profile_page')
+def profile_page():
+    return render_template('profile.html')
+
+@app.route('/bulletin')
+def bulletin():
+    return render_template('bulletin.html')
+
+# @app.route('/move/bulletin_page')
+# def move(bulletin_page):
+#     return render_template('bulletin.html')
+
+@app.route('/set')
+def set():
+    return render_template('information.html')
 
 # Flask 애플리케이션에 스케줄러 추가
 scheduler.add_job(func=token_manager.remove_expired_tokens, trigger='interval', seconds=3600)  # 1시간마다 호출

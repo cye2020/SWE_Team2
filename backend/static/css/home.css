@@ -1,159 +1,73 @@
-/* General styles */
-.flex-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.Titlelogo {
+  width: 586px;
+  color: black;
+  font-size: 70px;
+  font-family: 'HCR Dotum';
+  font-weight: 700;
+  word-wrap: break-word;
+  margin-right: 20px;
+  margin-top: 20px; /* Adjust this margin as needed */
+  margin-bottom: 20px; /* Adjust this margin as needed */
 }
 
-/* Add this CSS for the hover effect */
-.IconTop div:hover {
-    cursor: pointer;
-    transform: scale(1.1); /* You can adjust the scaling factor as needed */
+.Noticeframe {
+  width: calc(100% - 40px); /* Adjust the total width by subtracting twice the margin */
+  height: 811px;
+  position: relative;
+  background: white;
+  border-radius: 37px;
+  overflow: hidden;
+  margin-top: auto; /* Push the Noticeframe to the bottom */
+  margin-bottom: auto;
+  margin-left: 20px; /* Add left margin */
+  margin-right: 20px; /* Add right margin */
 }
 
-.IconBottom div:hover {
-    cursor: pointer;
-    transform: scale(1.1); /* You can adjust the scaling factor as needed */
+
+
+.ListLine {
+  width: 1104px;
+  height: 0px;
+  left: 47px;
+  top: 85px;
+  position: absolute;
+  border: 3px #AFADAD solid;
+}
+
+.ListLogo {
+  width: 180px;
+  height: 38px;
+  left: 56px;
+  top: 36px;
+  position: absolute;
+  color: #2B6653;
+  font-size: 31px;
+  font-family: 'HCR Dotum';
+  font-weight: 700;
+  word-wrap: break-word;
 }
 
 
-/* Header styles */
-.Homeframe {
-    width: 1382px;
-    height: 1011px;
-    padding: 22px 22px 23.60px 22px;
-    background: #38705C;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+.Noticelistview {
+  width: 100%; /* Adjust the width to fill the Noticeframe */
+  height: 689px;
+  position: absolute;
+  top: calc(85px + 3px + 32px); /* Set top based on ListLine position and gap */
+  left: 0; /* Align to the left */
+  padding-left: 13px;
+  padding-right: 13px;
+  padding-top: 28px;
+  padding-bottom: 28px;
+  background: white;
+  border-radius: 37px;
+  overflow: hidden;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 32px;
+  display: inline-flex;
 }
 
-/* Sidebar styles */
-.Menubar {
-    width: 133.20px;
-    height: 965.40px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Center vertically */
-    align-items: center; /* Center horizontally */
-    margin-right: 20px; /* Add a 20px gap to the right */
-  }
-  
-  .IconTop {
-    width: 79px;
-    height: 408px;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center; /* Center icons horizontally */
-    position: absolute;
-    top: 0; /* Position it at the top of the parent (.Menubar) */
-    left: 50%; /* Center it horizontally */
-    transform: translateX(-50%); /* Adjust for centering */
-    gap: 84px;
-    display: flex;
-    transition: transform 0.3s ease; /* Add a smooth transition effect */
-  }
-  
-  .IconBottom {
-    order: 2;
-    margin-top: auto; 
-    transition: transform 0.3s ease; /* Add a smooth transition effect */
-  }
-  
-  /* Common styles for icons */
-  .IconTop div {
-    width: 70px; /* Set a specific width for all icons */
-    height: 70px; /* Set a specific height for all icons */
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
 
-/* Main content styles */
-.Menuframe {
-    width: 1227px;
-    height: 964px;
-    position: relative;
-    background: linear-gradient(180deg, #FFD233 0%, rgba(255, 210.12, 51, 0) 100%);
-    border-radius: 35px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: auto;
-  }
-  
-  .Titlelogo {
-    width: 586px;
-    color: black;
-    font-size: 70px;
-    font-family: 'HCR Dotum';
-    font-weight: 700;
-    word-wrap: break-word;
-    margin-right: 20px;
-    margin-top: 20px; /* Adjust this margin as needed */
-    margin-bottom: 20px; /* Adjust this margin as needed */
-  }
-  
-  .Noticeframe {
-    width: calc(100% - 40px); /* Adjust the total width by subtracting twice the margin */
-    height: 811px;
-    position: relative;
-    background: white;
-    border-radius: 37px;
-    overflow: hidden;
-    margin-top: auto; /* Push the Noticeframe to the bottom */
-    margin-bottom: auto;
-    margin-left: 20px; /* Add left margin */
-    margin-right: 20px; /* Add right margin */
-  }
-  
-  
-  
-  .ListLine {
-    width: 1104px;
-    height: 0px;
-    left: 47px;
-    top: 85px;
-    position: absolute;
-    border: 3px #AFADAD solid;
-  }
-  
-  .ListLogo {
-    width: 180px;
-    height: 38px;
-    left: 56px;
-    top: 36px;
-    position: absolute;
-    color: #2B6653;
-    font-size: 31px;
-    font-family: 'HCR Dotum';
-    font-weight: 700;
-    word-wrap: break-word;
-  }
-  
-
-  .Noticelistview {
-    width: 100%; /* Adjust the width to fill the Noticeframe */
-    height: 689px;
-    position: absolute;
-    top: calc(85px + 3px + 32px); /* Set top based on ListLine position and gap */
-    left: 0; /* Align to the left */
-    padding-left: 13px;
-    padding-right: 13px;
-    padding-top: 28px;
-    padding-bottom: 28px;
-    background: white;
-    border-radius: 37px;
-    overflow: hidden;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 32px;
-    display: inline-flex;
-  }
-  
-  
-  /* Add more CSS styles for other elements as needed */
-  
+/* Add more CSS styles for other elements as needed */
