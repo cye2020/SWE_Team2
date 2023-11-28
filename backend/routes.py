@@ -4,31 +4,13 @@ from init import login_manager, scheduler, db, bcrypt, create_app
 from forms import RegisterForm, LoginForm
 from token_manager import TokenManager
 from mail import send_verification_email
-from models import Member, House
+from models import Member, House, free_post, contract_post
 
 
 app = create_app()
 
 
-class free_post(db.Model):
-    __tablename__='free_post'
-    seq=db.Column('seq',db.Integer,nullable=False,autoincrement=True,primary_key=True)
-    title=db.Column('title',db.VARCHAR(30),nullable=True)
-    content=db.Column('content',db.Text,nullable=True)
-    writer_id=db.Column('writer_id',db.VARCHAR(30),nullable=True)
-    create_date=db.Column('create_date',db.VARCHAR(20),nullable=True)
-    anon=db.Column('anon',db.Boolean,nullable=False, default=False)
 
-class contract_post(db.Model):
-    __tablename__='contract_post'
-    seq=db.Column('seq',db.Integer,nullable=False,autoincrement=True,primary_key=True)
-    title=db.Column('title',db.VARCHAR(30),nullable=True)
-    object=db.Column('object',db.VARCHAR(20),nullable=True)
-    price=db.Column('price',db.VARCHAR(20),nullable=True)
-    content=db.Column('content',db.Text,nullable=True)
-    writer_id=db.Column('writer_id',db.VARCHAR(30),nullable=True)
-    create_date=db.Column('create_date',db.VARCHAR(20),nullable=True)
-    anon=db.Column('anon',db.Boolean,nullable=False, default=False)
 
 @app.route('/house/filter', methods=['GET'])
 def filter_houses():
@@ -378,9 +360,6 @@ def board():
     except:
         return render_template("bulletin.html")
 
-# @app.route('/move/bulletin_page')
-# def move(bulletin_page):
-#     return render_template('bulletin.html')
 @app.route('/house')
 def house():
     return render_template('real.html') 

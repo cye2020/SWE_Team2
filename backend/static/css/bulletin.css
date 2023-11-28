@@ -1,9 +1,12 @@
 *{margin: 0; padding: 0; box-sizing: border-box;}
 
+.Homeframe{
+    width: 100%;
+}
 /* Main content styles */
 .Menuframe {
     width: 1227px;
-    height: 964px;
+    height: 100%;
     position: relative;
     background: linear-gradient(180deg, #FFD233 0%, rgba(255, 210.12, 51, 0) 100%);
     border-radius: 35px;
