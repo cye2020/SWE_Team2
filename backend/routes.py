@@ -132,6 +132,72 @@ def filter_houses():
 
     except Exception as e:
         return jsonify({'error': str(e)})
+    
+#POST 게시물 DB(post)에 저장(완료)
+@app.route('/free/post', methods=['POST'])
+def post_free():
+    #title과 content 가져오기
+    title=request.form.get('title')
+    anon_status=request.form.get('anon')
+    content=request.form.get('content')
+    writer_id="peterjm007@naver.com"
+    create_date=request.form.get('timestamp')
+    
+    #익명여부
+    if anon_status=='none':
+        anon=False
+    else:
+        anon=True
+    
+
+    #DB에 저장할 board_post 객체 생성
+    new_post=free_post(title=title,content=content, anon=anon,writer_id=writer_id,create_date=create_date)
+    
+    db.session.add(new_post)
+    db.session.commit()  
+    free_posts = free_post.query.order_by(free_post.create_date.desc()).limit(4).all()
+    contract_posts= contract_post.query.order_by(contract_post.create_date.desc()).limit(4).all()
+
+    return render_template("bulletin.html",free_posts=free_posts,contract_posts=contract_posts)
+
+
+#POST 게시물 DB(contract_post)에 저장(완료)
+@app.route('/contract/post', methods=['POST'])
+def post_contract():
+    #title과 content 가져오기
+    title=request.form.get('title')
+    anon_status=request.form.get('anon')
+    content=request.form.get('content')
+    object=request.form.get('object')
+    price=request.form.get('price')
+    writer_id="peterjm007@naver.com"
+    create_date=request.form.get('timestamp')
+    
+    #익명여부
+    if anon_status=='none':
+        anon=False
+    else:
+        anon=True
+    
+
+    #DB에 저장할 board_post 객체 생성
+    new_post=contract_post(title=title,content=content,price=price, anon=anon,writer_id=writer_id,create_date=create_date)
+    
+    db.session.add(new_post)
+    db.session.commit()
+    free_posts = free_post.query.order_by(free_post.create_date.desc()).limit(4).all()
+    contract_posts= contract_post.query.order_by(contract_post.create_date.desc()).limit(4).all()
+
+    return render_template("bulletin.html",free_posts=free_posts,contract_posts=contract_posts)
+    
+    
+
+
+@app.route('/move/<string:topic>', methods=['GET'])
+def move(topic):
+    
+
+    return render_template('notification.html',topic=topic)
 
 #매물 세부정보 페이지 
 @app.route('/house/<house_id>', methods=['GET'])
@@ -322,9 +388,7 @@ def house():
 def set():
     return render_template('information.html')
 
-@app.route('/move/board')
-def move(topic):
-    return render_template('bulletin.html')
+
 
 # Flask 애플리케이션에 스케줄러 추가
 scheduler.add_job(func=token_manager.remove_expired_tokens, trigger='interval', seconds=3600)  # 1시간마다 호출
