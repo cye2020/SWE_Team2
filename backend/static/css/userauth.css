@@ -86,26 +86,26 @@ body {
 
 .button1, .button2 {
     position: absolute;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
-    text-align: left;
+    text-align: center;
     border-radius: 11px;
     border-width: 3px;
     border-color: #8dc63f;
     background-color: #fff;
 }
-.button_base {
-  width: 233px;
-  height: 37px;
-  text-align: center;
-  color: #2b6653;
-  font-size: 12px;
-  left: 105px;
-}
 .button1 {
+    width: 233px;
+    height: 37px;
+    left: 105px;
     top: 94px;
+    color: #2b6653;
 }
 
 .button2 {
+    width: 233px;
+    height: 37px;
+    left: 105px;
     top: 152px;
- }
+    color: #2b6653;
+}

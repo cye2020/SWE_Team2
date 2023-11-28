@@ -96,15 +96,16 @@ body {
 *{margin: 0; padding: 0; box-sizing: border-box;}
 
 .body {
-  width: 1000px;
-  height: 680px;
-  position: absolute;
-  left: 52px;
-  top: 70px;
+  width: calc(100% - 40px); /* Adjust the total width by subtracting twice the margin */
+  height: 811px;
+  position: relative;
+  background: white;
+  border-radius: 37px;
   overflow: hidden;
-  border-radius: 32px;
-  background: #fff;
-  padding: 0 50px;
+  margin-top: auto; /* Push the Noticeframe to the bottom */
+  margin-bottom: auto;
+  margin-left: 20px; /* Add left margin */
+  margin-right: 20px;
 }
 
 .title {
