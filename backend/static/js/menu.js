@@ -2,8 +2,7 @@
 const homeIcon = document.getElementById('homeIcon');
 const estateIcon = document.getElementById('estateIcon');
 const bulletinIcon = document.getElementById('bulletinIcon');
-const profileIcon = document.getElementById('profileIcon');
-const settingIcon = document.getElementById('settingIcon');
+const logoutIcon = document.getElementById('.LogoutIcon');
 
 // Add click event listeners
 homeIcon.addEventListener('click', () => {
@@ -21,12 +20,9 @@ bulletinIcon.addEventListener('click', () => {
     window.location.href = '/board';
 });
 
-profileIcon.addEventListener('click', () => {
-    // Navigate to the profile page
-    window.location.href = '/profile_page';
+
+logoutIcon.addEventListener('click', () => {
+    // Redirect to the logout page
+    window.location.href = '/logout';
 });
 
-settingIcon.addEventListener('click', () => {
-    // Navigate to the setting page
-    window.location.href = '/set';
-});
