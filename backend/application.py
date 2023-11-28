@@ -5,6 +5,7 @@ from forms import RegisterForm, LoginForm
 from token_manager import TokenManager
 from mail import send_verification_email
 from models import Member, House, free_post, contract_post
+from geopy.distance import geodesic
 
 
 application = create_app()
@@ -57,7 +58,7 @@ def filter_houses():
             query = House.query.filter(House.house_type.in_(house_type_filters))
         
         else:
-           # 필터 기준을 받아오기
+            # 필터 기준을 받아오기
             house_type_filters = request.args.getlist('house_type[]')
             print(f"Filters: {house_type_filters}")
             print(f"Args: {request.args}")
@@ -67,6 +68,8 @@ def filter_houses():
             space2_filter = request.args.get('space2_lt[]')
             taglist_filter = request.args.get('taglist[]')
             direction_filter = request.args.get('direction[]')
+
+            print("not reset")
 
             # 필터 조건에 따라 쿼리 작성
             query = House.query
@@ -132,14 +135,26 @@ def filter_houses():
 
     except Exception as e:
         return jsonify({'error': str(e)})
-    
+
 #매물 세부정보 페이지 
 @application.route('/house/<house_id>', methods=['GET'])
 def get_house_details(house_id):
     house = House.query.filter_by(house_id=house_id).first()
+    # 매물의 위치
+    house_location = (house.lat, house.lon)
+
+    # 도서관의 위치
+    library_location = (37.293938, 126.975056)
+
+    # 성균관대역의 위치
+    station_location = (37.300316, 126.971163)
+
+    # 거리 계산
+    library_distance = round(geodesic(house_location, library_location).meters)
+    station_distance = round(geodesic(house_location, station_location).meters)
 
     if house:
-        return render_template('house_details.html', house=house)
+        return render_template('house_details.html', house=house, library_distance=library_distance, station_distance=station_distance)
     else:
         return jsonify({'error': 'House not found'}), 404 
 

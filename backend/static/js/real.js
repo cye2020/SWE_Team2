@@ -63,7 +63,7 @@ function applyFilters() {
     // Get checkbox values
     var selectedHouseTypes = Array.from(houseTypeCheckboxes).map(checkbox => checkbox.value);
     var selectedPayTypes = Array.from(payTypeCheckboxes).map(checkbox => checkbox.value);
-
+    console.log(selectedHouseTypes);
     // Get input values
     var prcLt = prcLtInput ? (prcLtInput.value.length > 0 ? prcLtInput.value : null) : null;
     var rentprcLt = rentprcLtInput ? (rentprcLtInput.value.length > 0 ? rentprcLtInput.value : null) : null;
@@ -132,10 +132,11 @@ function resetFilters() {
     var filterInputs = document.querySelectorAll('input[type="checkbox"], input[type="number"], input[type="text"]');
     console.log(filterInputs);
     filterInputs.forEach(function (input) {
-        input.value = '';
-        console.log(input.checked);
         if (input.type === 'checkbox') {
             input.checked = false;
+        }
+        else{
+            input.value = '';
         }
     });
     console.log('After Reset - Checkbox States:', Array.from(document.querySelectorAll('input[type="checkbox"]')).map(checkbox => checkbox.checked));   
