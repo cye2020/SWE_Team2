@@ -2,7 +2,7 @@
 const homeIcon = document.getElementById('homeIcon');
 const estateIcon = document.getElementById('estateIcon');
 const bulletinIcon = document.getElementById('bulletinIcon');
-const logoutIcon = document.getElementById('.LogoutIcon');
+const logoutIcon = document.getElementById('logoutIcon');
 
 // Add click event listeners
 homeIcon.addEventListener('click', () => {
@@ -23,6 +23,6 @@ bulletinIcon.addEventListener('click', () => {
 
 logoutIcon.addEventListener('click', () => {
     // Redirect to the logout page
-    window.location.href = '{{url_for('logout')}}';
+    window.location.href = '/logout';
 });
 
