@@ -13,7 +13,7 @@ homeIcon.addEventListener('click', () => {
 
 estateIcon.addEventListener('click', () => {
     // Navigate to the estate page
-    window.location.href = '/real';
+    window.location.href = '/house';
 });
 
 bulletinIcon.addEventListener('click', () => {

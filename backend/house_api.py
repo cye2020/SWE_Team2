@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:peter0107@database-1.cc0lokhfxaeb.us-east-2.rds.amazonaws.com:3306/software_database'
 db.init_app(app)
 
-# /house/filter 정의
+# /house/filter 필터링하는 부분 
 @app.route('/house/filter', methods=['GET'])
 def filter_houses():
     try:
@@ -111,6 +111,7 @@ def filter_houses():
     except Exception as e:
         return jsonify({'error': str(e)})
 
+#매물 세부정보 페이지 
 @app.route('/house/<house_id>', methods=['GET'])
 def get_house_details(house_id):
     house = House.query.filter_by(house_id=house_id).first()
