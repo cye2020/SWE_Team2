@@ -46,6 +46,10 @@ class LoginForm(FlaskForm):
         
         if member is None:
             raise ValidationError("등록되지 않은 이메일 주소입니다")
+    
+    def validate_password(self, password):
+        member = Member.query.filter_by(login_id=self.email.data).first()
         
-        if not bcrypt.check_password_hash(member.password, self.password.data):
-            raise ValidationError("비밀번호가 일치하지 않습니다.")
+        if member is not None:
+            if not bcrypt.check_password_hash(member.password, self.password.data):
+                raise ValidationError("비밀번호가 일치하지 않습니다.")

@@ -57,8 +57,8 @@ function applyFilters() {
     var spc2LtInput = document.querySelector('input[name=space2_lt]');
     var taglistInput = document.querySelector('input[name=taglist]');
     var directionInput = document.querySelector('input[name=direction]');
-    var sortSelect = document.querySelector('select[name=sort]');
-    var orderSelect = document.querySelector('select[name=order]');
+    // var sortSelect = document.querySelector('select[name=sort]');
+    // var orderSelect = document.querySelector('select[name=order]');
 
     // Get checkbox values
     var selectedHouseTypes = Array.from(houseTypeCheckboxes).map(checkbox => checkbox.value);
@@ -68,12 +68,12 @@ function applyFilters() {
     var prcLt = prcLtInput ? (prcLtInput.value.length > 0 ? prcLtInput.value : null) : null;
     var rentprcLt = rentprcLtInput ? (rentprcLtInput.value.length > 0 ? rentprcLtInput.value : null) : null;
     var spc2Lt = spc2LtInput && spc2LtInput.value ? spc2LtInput.value : null;
-    var taglist = taglistInput ? (taglistInput.value.length > 0 ? taglistInput.value : null) : null;
+    // var taglist = taglistInput ? (taglistInput.value.length > 0 ? taglistInput.value : null) : null;
     var direction = directionInput ? (directionInput.value.length > 0 ? directionInput.value : null) : null;
 
     // Get select values with default values
-    var sort = sortSelect ? (sortSelect.value.length > 0 ? sortSelect.value : 'defaultSortValue') : 'defaultSortValue';
-    var order = orderSelect ? (orderSelect.value.length > 0 ? orderSelect.value : 'defaultOrderValue') : 'defaultOrderValue';
+    // var sort = sortSelect ? (sortSelect.value.length > 0 ? sortSelect.value : 'defaultSortValue') : 'defaultSortValue';
+    // var order = orderSelect ? (orderSelect.value.length > 0 ? orderSelect.value : 'defaultOrderValue') : 'defaultOrderValue';
 
     // Encode filter values
     var filterObject = {
@@ -82,10 +82,7 @@ function applyFilters() {
         prc_lt: prcLt,
         rentprc_lt: rentprcLt,
         spc2_lt: spc2Lt,
-        taglist: taglist,
         direction: direction,
-        sort: sort,
-        order: order
     };
 
     var filterString = Object.keys(filterObject)
@@ -131,15 +128,33 @@ function applyFilters() {
 }
 
 function resetFilters() {
-    // Clear all filter inputs
     var filterInputs = document.querySelectorAll('input[type="checkbox"], input[type="number"], input[type="text"]');
+    console.log(filterInputs);
     filterInputs.forEach(function (input) {
         input.value = '';
         if (input.type === 'checkbox') {
             input.checked = false;
         }
     });
-
-    // Trigger the applyFilters function to reload the original data
-    applyFilters();
+    
+    console.log('Reset start');
+    fetch('/house/init', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+            // Add any other headers if needed
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Data has been successfully fetched
+        // Now you can use the data to perform actions on your page
+        addMarkers(data);  // Assuming addMarkers is a function that processes the data
+    })
+    .catch(error => {
+        // Handle any errors that occurred during the fetch
+        console.error('Error fetching data:', error);
+    });
+    // // Trigger the applyFilters function to reload the original data
+    // applyFilters();
 }
