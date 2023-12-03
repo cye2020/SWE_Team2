@@ -5,3 +5,4 @@ main/__pycache__/
 *.pyc
 
 main/config.py
+.vscode
