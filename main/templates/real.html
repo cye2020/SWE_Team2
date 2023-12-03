@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/real.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    
+    <title>Real Estate</title>
+</head>
+
+<body>
+    <!-- Your HTML remains unchanged -->
+    <div class="Homeframe">
+        <!-- 여기는 다른 페이지들 다 가지고 있는 부분 -->
+        <div class="Menubar">
+            <div class="IconTop">
+                <div class="Homeicon" id="homeIcon">
+                    <img src="../static/images/HomeIcon.svg" alt="Home Icon">
+                </div>
+                <div class="Estateicon" id="estateIcon">
+                    <img src="../static/images/EstateIcon.svg" alt="Estate Icon">
+                </div>
+                <div class="Bulltinicon" id="bulletinIcon">
+                    <img src="../static/images/BulltinIcon.svg" alt="Bulletin Icon">
+                </div>
+            </div>
+            <div class="LogoutIcon" id="logoutIcon">
+                <img src="/static/images/LogoutIcon.svg" alt="LogoutIcon">
+            </div>
+        </div>
+        <div class="Menuframe">
+            <!-- MenuFrame 밑으로 개별화 시키기 -->
+            <div class="Mainframe">
+                <div class="Title">
+                    <span class="TitleText1">부동산</span>
+                    <span class="TitleText2">게시판</span>
+                </div>
+        
+                <div class="Mapframe">
+                    <div id = "map" class="Map"></div>
+                    <div class="Filters">
+                        <div class="filter-container-cb">                                
+                            <table>
+                                <tr>
+                                    <td><label id="house_type_label" for="house_type">매물유형</label></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="house_type" value="오피스텔">
+                                        <label for="house_type">오피스텔</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="house_type" value="빌라">
+                                        <label for="house_type">빌라</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="house_type" value="단독/다가구">
+                                        <label for="house_type">단독/다가구</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="house_type" value="상가주택">
+                                        <label for="house_type">상가주택</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="house_type" value="원룸">
+                                        <label for="house_type">원룸</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" name="house_type" value="고시원">
+                                        <label for="house_type">고시원</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+        
+                        <!-- Pay Type -->
+                        <div class="filter-container-cb">
+                            <table>
+                                <tr>
+                                    <td><label id = "pay_type_label" for="pay_type">거래 유형</label></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" name="pay_type" value="월세"> 
+                                        <label for="pay_type">월세</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" name="pay_type" value="전세">
+                                        <label for="pay_type">전세</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" name="pay_type" value="단기임대">
+                                        <label for="pay_type">단기임대</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+        
+                        <!-- Other Filters -->
+                        <div class="filter-container">
+                            <div id="price-container">
+                                <label for="prc_lt">보증금(최대)</label>
+                                <input type="number" name="prc_lt">
+                            </div>
+                            <div id="rent-price-container">
+                                <label for="rentprc_lt">임대료(최대)</label>
+                                <input type="number" name="rentprc_lt">
+                            </div>
+                            <div id="space-container">
+                                <label for="space2_lt">전용면적(최대)</label>
+                                <input type="number" name="space2_lt">
+                            </div>
+                            <div id="direction-container">
+                                <label for="direction">방향</label>
+                                <input type="text" name="direction">
+                            </div>
+                        </div>
+        
+                        <!-- Sort By -->
+                        <div class="filter-container">
+                                    
+                            <!-- Reset Button -->
+                            <div id="button-container">
+                                <input type="submit" value="검색" onclick="applyFilters()">
+                                <button type="button" onclick="resetFilters()">초기화</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="{{ url_for('static', filename='js/real.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+</body>
+</html>

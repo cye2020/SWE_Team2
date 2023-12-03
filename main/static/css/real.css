@@ -1,0 +1,132 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'HCR Dotum', sans-serif;
+}
+
+.Mainframe {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: linear-gradient(180deg, #FFD233 0%, rgba(255, 210.12, 51, 0) 100%);
+    border-radius: 35px;
+    overflow: hidden;
+}
+
+.Title {
+    width: 180px;
+    height: 38px;
+    left: 34px;
+    top: 6px;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.TitleText1, .TitleText2 {
+    font-size: 24px;
+    font-weight: 700;
+    word-wrap: break-word;
+}
+
+.Mapframe {
+    padding: 0;
+    margin: 60px auto;
+    width: 90%;
+    height: 100%;
+    position: relative;
+    background: white;
+    border-radius: 37px;
+    overflow: hidden;
+    align-items: center;
+}
+
+.Map, .Filters {
+    width: 1017px;
+    height: 408px;
+    position: relative;
+}
+
+.Map {
+    margin: 40px auto; /* 40px top and bottom, auto for horizontal centering */
+}
+
+.Filters {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+}
+
+.filter-container, .filter-container-cb {
+    width: 200px;
+    height: 100%;
+    padding: 10px;
+    text-align: start;
+    margin-bottom: 10px;
+}
+
+.filter-container label,
+.filter-container input,
+.filter-container select {
+    width: 80%;
+    margin-bottom: 16px; /* Adjust the margin as needed */
+    justify-content: center;
+}
+
+#button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+label, input, select {
+    font-size: 24px;
+}
+
+input[type="submit"],
+button {
+    width: 200px;
+    height: 120px;
+    padding: 10px 20px; /* Adjust padding to your liking */
+    font-size: 18px; /* Adjust font size to your liking */
+    background-color: #4CAF50; /* Green background color */
+    color: white; /* White text color */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Optional: Add border-radius for rounded corners */
+    cursor: pointer;
+}
+
+button {
+    background-color: #FF0000; /* 빨간색 또는 원하는 색상으로 변경 */
+    color: white;
+    border: none;
+}
+
+/* Style checkboxes */
+input[type="checkbox"] {
+    appearance: none; /* Remove default checkbox style */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px; /* Set width and height */
+    height: 20px;
+    border: 2px solid #4CAF50; /* Green border */
+    border-radius: 5px; /* Optional: Add border-radius for rounded corners */
+    outline: none; /* Remove outline */
+    cursor: pointer;
+}
+
+/* Style checked state of checkboxes */
+input[type="checkbox"]:checked {
+    background-color: #4CAF50; /* Green background color */
+    border: 2px solid #4CAF50; /* Green border */
+}
+
+#house_type_label, #pay_type_label {
+    font-size: 32px;
+    font-weight: bold;
+}
