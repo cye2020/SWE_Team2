@@ -33,6 +33,7 @@ main
  ┣ templates
  ┣ application.py  
  ┣ config.py  
+ ┣ connection.py   
  ┣ forms.py
  ┣ house_update.py
  ┣ init.py
@@ -43,7 +44,15 @@ main
 ```
 
 ## 주요 기능
-#### 로그인 및 회원가입(작성요망)
+#### 로그인 및 회원가입
+* /login
+    * 유저가 이메일, 비밀번호를 입력해 로그인을 함
+* /register
+    * 유저가 프로필 이미지 (선택), 이메일, 비밀번호, 닉네임을 입력하면 입력한 이메일로 인증 메일이 발송됨
+* /verify/<token>
+    * 유저 이메일을 인증하고 회원가입을 진행해 DB에 /register에서 입력한 정보를 저장
+* /logout
+    * 로그아웃을 함
 
 #### 게시판 기능
 * /board
@@ -77,6 +86,23 @@ $ cd main
 ```
 
 ### Run
+config.py를 생성 후 아래 코드를 실행
+``` 
+# config.py
+
+# Mail 설정
+MAIL_SENDER = 'your_email_address'
+MAIL_PASSWORD = 'your_password'
+
+# DB 설정
+DATABASE_URI = 'your_database'
+
+# AWS S3 설정
+BUCKET_NAME = "your_s3_buket_name"
+AWS_ACCESS_KEY = "your_access_key"
+AWS_SECRET_KEY = "your_secret_key"
+```
+
 ```
 $ python application.py
 ```
