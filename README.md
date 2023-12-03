@@ -54,11 +54,22 @@ main
 * /move/<<string:topic>>
     * 게시판 글 작성 page로 이동
 
-#### 부동산 기능(작성요망)
+#### 부동산 기능
+* /house
+    * 율전동, 천천동에 존재하는 매물들을 크롤링한 DB에서 전체 매물을 가져와 지도에 마커로 표시함(/house/init 호출)
+* /house/<<bigint:house_id>>
+    * 마커에 표시된 자세히보기를 누를 경우 호출되는 매물 세부정보 페이지
+* /house/filters
+    * 지도 밑의 필터링 기능
+* /house/update
+    * 크롤링하여 DB에 매물 정보 업데이트
 
 ## 시작하기
 
-### Clone Repository
+### URL
+http://swe2023team2-env.eba-bpshwsem.ap-northeast-2.elasticbeanstalk.com/
+
+### Clone Repository (in Local)
 ```
 $ git clone https://github.com/Kangsan419/SWE_Team2.git
 $ cd main
