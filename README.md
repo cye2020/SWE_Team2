@@ -8,7 +8,7 @@ SKKU Introduction to Software Engineering Team 2 Project "구해봐요 성대에
 * Frontend(작성요망)
     * 김강산
     * 인진영
-    * 정안승
+    * 정안승 : 웹페이지 디자인, 로그인 및 회원가입 frontend 구현
     * 한재웅
 
 * Backend
