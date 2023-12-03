@@ -9,6 +9,7 @@ class Member(UserMixin, db.Model):
     login_id = db.Column(db.String(40),primary_key=True, unique=True, nullable=False)
     password = db.Column(db.String(40), nullable=False)
     nickname = db.Column(db.String(40), nullable=False)
+    profile_image = db.Column(db.String(255))
     
     def __repr__(self):
         return f"<User {self.login_id}>"

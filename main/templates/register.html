@@ -21,38 +21,47 @@
                 </ul>
             {% endif %}
         {% endwith %}
-        <form method="POST" action="{{ url_for('register') }}">
+        <form method="POST" action="{{ url_for('register') }}" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
+            <div class="field">
+                <b>프로필 이미지</b>
+                {{form.profile_image}}
+            </div>
+            <div class="invalid-feedback">
+            {% if form.profile_image.errors %}
+                <span style="color: red;">{{ form.profile_image.errors[0] }}</span>
+            {% endif %}
+            </div>
             <div class="field">
                 <b>아이디</b>
                 <span class="placehold-text">{{ form.email }}</span>
             </div>
             <div class="invalid-feedback">
-            {% for error in form.email.errors %}
-                <span>{{ error }}</span>
-            {% endfor %}
+            {% if form.email.errors %}
+                <span style="color: red;">{{ form.email.errors[0] }}</span>
+            {% endif %}
             </div>
             <div class="field">
                 <b>비밀번호</b>
                 {{ form.password(class="userpw") }}
             </div>
-            {% for error in form.password.errors %}
-                <span>{{ error }}</span>
-            {% endfor %}
+            {% if form.password.errors %}
+                <span style="color: red;">{{ form.password.errors[0] }}</span>
+            {% endif %}
             <div class="field">
                 <b>비밀번호 확인</b>
                 {{ form.confirm_password(class="userpw") }}
             </div>
-            {% for error in form.confirm_password.errors %}
-                <span>{{ error }}</span>
-            {% endfor %}
+            {% if form.confirm_password.errors %}
+                <span style="color: red;">{{ form.confirm_password.errors[0] }}</span>
+            {% endif %}
             <div class="field">
                 <b>닉네임</b>
                 {{ form.nickname }}
             </div>
-            {% for error in form.nickname.errors %}
-                <span>{{ error }}</span>
-            {% endfor %}
+            {% if form.nickname.errors %}
+                <span style="color: red;">{{ form.nickname.errors[0] }}</span>
+            {% endif %}
             {{ form.submit }}
         </form>
         

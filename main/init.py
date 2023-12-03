@@ -9,6 +9,7 @@ from flask_bcrypt import Bcrypt
 from apscheduler.schedulers.background import BackgroundScheduler
 import os
 from config import MAIL_SENDER, MAIL_PASSWORD, DATABASE_URI
+from connection import s3_connection
 
 
 # Flask-Login 초기화
@@ -24,6 +25,9 @@ cors = CORS()
 
 # Flask 애플리케이션에 스케줄러 추가
 scheduler = BackgroundScheduler()
+
+# AWS S3 연결
+s3 = s3_connection()
 
 
 def create_app():

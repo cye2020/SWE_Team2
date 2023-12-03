@@ -2,15 +2,20 @@
 
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_user, login_required, logout_user, current_user
-from init import login_manager, scheduler, db, bcrypt, create_app
+from werkzeug.utils import secure_filename
+from botocore.exceptions import NoCredentialsError
+from init import login_manager, scheduler, db, bcrypt, s3, create_app
 from forms import RegisterForm, LoginForm
+from geopy.distance import geodesic
+from io import BytesIO
 from token_manager import TokenManager
 from mail import send_verification_email
 from models import Member, House, free_post, contract_post
-from geopy.distance import geodesic
+from config import BUCKET_NAME
 
 
 application = create_app()
+
 # TokenManager 인스턴스 생성
 token_manager = TokenManager()
 
@@ -280,10 +285,19 @@ def register():
         email = form.email.data + "@g.skku.edu"
         password = form.password.data
         nickname = form.nickname.data
-
+        profile_image = form.profile_image.data
+        filename = None
+        
+        if profile_image:
+            filename = profile_image.filename
+            
+            profile_image_contents = BytesIO()
+            profile_image_contents.write(profile_image.read())
+            profile_image_contents.seek(0)
+        
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
-        user = Member(login_id=email, password=hashed_password, nickname=nickname)
-        token = token_manager.generate_token(user)
+        user = Member(login_id=email, password=hashed_password, nickname=nickname, profile_image=filename)
+        token = token_manager.generate_token(user, profile_image_contents)
 
         send_verification_email(email, token)
 
@@ -301,9 +315,23 @@ def verify_email(token):
         
         # 사용자 정보를 가져와서 등록
         user = token_manager.tokens[token]['user']
+        profile_image = token_manager.tokens[token]['profile_image']
         
-        db.session.add(user)
-        db.session.commit()
+        # 프로필 이미지를 업로드하고 S3에 저장
+        if profile_image:
+            profile_image_filename = secure_filename(secure_filename(user.profile_image))
+            profile_image_key = f"SWE2023_Team2/profile/{user.login_id}_{profile_image_filename}"
+
+            try:
+                s3.upload_fileobj(profile_image, BUCKET_NAME, profile_image_key)
+                user.profile_image = f"https://{BUCKET_NAME}.s3.amazonaws.com/{profile_image_key}"
+                db.session.add(user)
+                db.session.commit()
+            except NoCredentialsError:
+                flash('AWS credentials not available.', 'error')
+                return redirect(url_for('register'))
+
+
         message = '이메일이 성공적으로 인증되었습니다!'
         alert_type = 'success'
         return render_template('alert.html', message=message, alert_type=alert_type, redirect_url=url_for('login'))

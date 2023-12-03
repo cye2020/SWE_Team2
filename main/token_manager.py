@@ -9,7 +9,7 @@ class TokenManager:
     def __init__(self):
         self.tokens = {}
 
-    def generate_token(self, user):
+    def generate_token(self, user, profile_image):
         token = secrets.token_hex(16)
         creation_time = int(time.time())
         expiration_time = 3600  # 1시간 동안 유효
@@ -19,7 +19,8 @@ class TokenManager:
             'creation_time': creation_time,
             'expiration_time': expiration_time,
             'verified': False,
-            'user': user
+            'user': user,
+            'profile_image': profile_image
         }
 
         return hashed_token

@@ -2,6 +2,7 @@
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, ValidationError
+from flask_wtf.file import FileAllowed, FileField
 from wtforms.validators import DataRequired, Email, EqualTo, InputRequired, Length, Regexp
 from models import Member
 from init import bcrypt
@@ -30,6 +31,7 @@ class RegisterForm(FlaskForm):
             ),
         ]
     )
+    profile_image = FileField('프로필 이미지', validators=[FileAllowed(['jpg', 'png'], '이미지 파일만 업로드 가능합니다.')])
     submit = SubmitField('가입하기')
     
     def validate_email(self, email):
