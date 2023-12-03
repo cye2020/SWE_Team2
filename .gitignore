@@ -4,5 +4,6 @@ main/__pycache__/
 # Ignore pyc files
 *.pyc
 
+# Ignore config file
 main/config.py
 .vscode
