@@ -13,7 +13,7 @@ SKKU Introduction to Software Engineering Team 2 Project "구해봐요 성대에
 
 * Backend
     * 강준모: 게시판 기능 backend 구현
-    * 문보현: 부동산 기능 backend 구현
+    * 문보현: 부동산 기능 frontend, backend 구현
     * 조예은: 로그인 및 회원가입 backend 구현
     * 진송찬: document 작성 및 presentation 수행
 
