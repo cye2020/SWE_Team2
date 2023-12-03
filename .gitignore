@@ -1,7 +1,7 @@
 # Ignore pycache directory
-backend/__pycache__/
+main/__pycache__/
 
 # Ignore pyc files
 *.pyc
 
-backend/config.py
+main/config.py
