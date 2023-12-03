@@ -18,9 +18,9 @@ SKKU Introduction to Software Engineering Team 2 Project "구해봐요 성대에
     * 진송찬: document 작성 및 presentation 수행
 
 ## 개발 환경
-* Html, Css
-* JS
-* AWS( Mysql )
+* HTML, CSS
+* JavaScript
+* AWS(MySQL)
 * Flask
 
 ## 프로젝트 구조
